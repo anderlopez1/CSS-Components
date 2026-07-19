@@ -1,0 +1,26 @@
+{
+    "name": "kwipps-demo-template",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Spec-driven demo-site template. Agent 3 emits a site.spec.json; this app renders it with the Untitled UI component system and builds to a static export on Vercel.",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@untitledui/icons": "^0.0.22",
+        "next": "16.2.0",
+        "react": "^19.2.4",
+        "react-dom": "^19.2.4",
+        "untitledui-components": "github:anderlopez1/CSS-Components"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4.2.2",
+        "@types/node": "^25.5.0",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "tailwindcss": "^4.2.2",
+        "typescript": "^5.9.3"
+    }
+}

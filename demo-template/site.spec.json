@@ -1,0 +1,200 @@
+{
+    "business": {
+        "name": "Trattoria Bella Vista",
+        "seoTitle": "Trattoria Bella Vista — Italienische Küche in Zürich Wiedikon",
+        "seoDescription": "Hausgemachte Pasta, Holzofen-Pizza und ausgesuchte italienische Weine im Herzen von Wiedikon. Reservieren Sie Ihren Tisch.",
+        "lang": "de"
+    },
+    "brand": {
+        "palette": "rose"
+    },
+    "agencyCredit": "Demo-Konzept erstellt von Kwipps",
+    "sections": [
+        {
+            "type": "header",
+            "logoText": "Trattoria",
+            "logoAccent": "Bella Vista",
+            "nav": [
+                {
+                    "label": "Küche",
+                    "href": "#features"
+                },
+                {
+                    "label": "Galerie",
+                    "href": "#gallery"
+                },
+                {
+                    "label": "Gäste",
+                    "href": "#reviews"
+                },
+                {
+                    "label": "Kontakt",
+                    "href": "#contact"
+                }
+            ],
+            "cta": {
+                "label": "Tisch reservieren",
+                "href": "#contact"
+            }
+        },
+        {
+            "type": "hero",
+            "variant": "split-photo",
+            "badge": "Seit 1998 in Wiedikon",
+            "headline": "Italien beginnt an Ihrem Tisch",
+            "sub": "Hausgemachte Pasta, Pizza aus dem Holzofen und Weine, die unsere Familie seit drei Generationen auswählt — mitten in Zürich Wiedikon.",
+            "primaryCta": {
+                "label": "Tisch reservieren",
+                "href": "#contact"
+            },
+            "secondaryCta": {
+                "label": "Unsere Küche",
+                "href": "#features"
+            },
+            "photo": {
+                "query": "cozy italian trattoria interior candle light",
+                "alt": "Gemütlicher Gastraum der Trattoria Bella Vista"
+            }
+        },
+        {
+            "type": "features",
+            "variant": "icon-cards",
+            "headline": "Was uns auszeichnet",
+            "sub": "Drei Dinge, für die unsere Gäste immer wiederkommen.",
+            "items": [
+                {
+                    "icon": "heart",
+                    "title": "Pasta fatta in casa",
+                    "body": "Jeden Morgen frisch gerollt — Tagliatelle, Ravioli und Gnocchi wie bei Nonna in Bologna."
+                },
+                {
+                    "icon": "flash",
+                    "title": "Pizza aus dem Holzofen",
+                    "body": "48 Stunden gereifter Teig, San-Marzano-Tomaten und Fior di Latte — bei 450 Grad in 90 Sekunden gebacken."
+                },
+                {
+                    "icon": "trophy",
+                    "title": "Ausgezeichnete Weinkarte",
+                    "body": "Über 120 Positionen aus allen Regionen Italiens, vom Barolo bis zum sizilianischen Naturwein."
+                }
+            ]
+        },
+        {
+            "type": "stats",
+            "items": [
+                {
+                    "value": "25+",
+                    "label": "Jahre Familientradition"
+                },
+                {
+                    "value": "4.8",
+                    "label": "Google-Bewertung"
+                },
+                {
+                    "value": "120",
+                    "label": "italienische Weine"
+                },
+                {
+                    "value": "90s",
+                    "label": "Pizza-Backzeit"
+                }
+            ]
+        },
+        {
+            "type": "gallery",
+            "headline": "Ein Blick in unsere Küche",
+            "photos": [
+                {
+                    "query": "fresh handmade pasta flour kitchen",
+                    "alt": "Frische hausgemachte Pasta"
+                },
+                {
+                    "query": "wood fired pizza oven flames",
+                    "alt": "Pizza im Holzofen"
+                },
+                {
+                    "query": "italian wine bottles cellar shelf",
+                    "alt": "Unsere Weinauswahl"
+                }
+            ]
+        },
+        {
+            "type": "testimonials",
+            "variant": "single-dark",
+            "items": [
+                {
+                    "quote": "Die beste Pasta ausserhalb Italiens. Punkt. Wir kommen seit zehn Jahren jeden Freitag — und es wird nie langweilig.",
+                    "name": "Martina Keller",
+                    "role": "Stammgast aus Wiedikon",
+                    "rating": 5
+                }
+            ]
+        },
+        {
+            "type": "faq",
+            "headline": "Gut zu wissen",
+            "items": [
+                {
+                    "q": "Nehmen Sie Reservierungen an?",
+                    "a": "Ja — am einfachsten telefonisch unter 044 123 45 67 oder über das Kontaktformular. Für Freitag- und Samstagabend empfehlen wir, einige Tage im Voraus zu reservieren."
+                },
+                {
+                    "q": "Gibt es vegetarische und vegane Optionen?",
+                    "a": "Selbstverständlich. Ein Drittel unserer Karte ist vegetarisch, und unsere Küche passt viele Gerichte gerne vegan an — sagen Sie es uns einfach."
+                },
+                {
+                    "q": "Kann man bei Ihnen private Anlässe feiern?",
+                    "a": "Unser Saal im Untergeschoss bietet Platz für bis zu 40 Personen — ideal für Geburtstage, Firmenessen und Familienfeiern. Kontaktieren Sie uns für ein Menü-Angebot."
+                }
+            ]
+        },
+        {
+            "type": "cta",
+            "headline": "Heute Abend italienisch?",
+            "sub": "Reservieren Sie Ihren Tisch — wir freuen uns auf Sie.",
+            "cta": {
+                "label": "Jetzt reservieren",
+                "href": "#contact"
+            }
+        },
+        {
+            "type": "contact",
+            "headline": "Besuchen Sie uns",
+            "address": "Birmensdorferstrasse 108, 8003 Zürich",
+            "phone": "044 123 45 67",
+            "email": "info@bellavista-zuerich.ch",
+            "hours": [
+                {
+                    "days": "Di–Fr",
+                    "time": "11:30–14:00, 18:00–23:00"
+                },
+                {
+                    "days": "Sa",
+                    "time": "18:00–23:30"
+                },
+                {
+                    "days": "So–Mo",
+                    "time": "geschlossen"
+                }
+            ],
+            "photo": {
+                "query": "italian restaurant facade evening street",
+                "alt": "Aussenansicht der Trattoria Bella Vista"
+            }
+        },
+        {
+            "type": "footer",
+            "legalName": "Trattoria Bella Vista GmbH",
+            "links": [
+                {
+                    "label": "Impressum",
+                    "href": "#"
+                },
+                {
+                    "label": "Datenschutz",
+                    "href": "#"
+                }
+            ]
+        }
+    ]
+}

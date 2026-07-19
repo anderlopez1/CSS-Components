@@ -1,0 +1,24 @@
+/* Pull in the full Untitled UI system: Tailwind v4, semantic color tokens
+   (text-primary, bg-brand-solid, …), typography scale, and plugins. */
+@import "untitledui-components/styles";
+
+/* The library ships compiled JS — tell Tailwind to scan it for class names so
+   utilities used inside the components are generated. */
+@source "../node_modules/untitledui-components/dist";
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Photo slots: enforced aspect ratios so agent-chosen photos can never break
+   the layout, whatever their native dimensions. */
+.ph-hero {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    object-fit: cover;
+}
+.ph-photo {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    object-fit: cover;
+}
