@@ -37,7 +37,7 @@
         "dev": "next dev --turbopack",
         "build": "next build",
         "start": "next start",
-        "build:lib": "npx tsc -p tsconfig.build.json && node scripts/build-esm.js",
+        "build:lib": "npx tsc -p tsconfig.build.json && npx tsc-alias -p tsconfig.build.json && node scripts/build-esm.js",
         "prepublishOnly": "npm run build:lib",
         "prepare": "npm run build:lib"
     },
@@ -75,6 +75,7 @@
         "postcss-loader": "^8.2.1",
         "prettier": "^3.8.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
+        "tsc-alias": "^1.9.1",
         "typescript": "^5.9.3"
     }
 }
