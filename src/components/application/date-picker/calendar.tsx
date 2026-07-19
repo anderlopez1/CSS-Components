@@ -24,6 +24,7 @@ export const CalendarContextProvider = ({ children }: PropsWithChildren) => {
     const [value, onChange] = useState<DateValue | null>(null);
     const [focusedValue, onFocusChange] = useState<DateValue | undefined>();
 
+    // @ts-ignore - AriaCalendarContext type mismatch
     return <AriaCalendarContext.Provider value={{ value, onChange, focusedValue, onFocusChange }}>{children}</AriaCalendarContext.Provider>;
 };
 

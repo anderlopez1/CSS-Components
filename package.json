@@ -1,13 +1,50 @@
 {
-    "name": "untitledui-nextjs-starter-kit",
-    "version": "0.0.0",
-    "private": true,
+    "name": "untitledui-components",
+    "version": "1.0.0",
+    "description": "Production-ready React component library built on React Aria Components with Tailwind CSS",
+    "license": "MIT",
+    "author": "Ander Lopez <anderlopez1@gmail.com>",
+    "homepage": "https://github.com/anderlopez1/CSS-Components",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/anderlopez1/CSS-Components.git",
+        "directory": "."
+    },
+    "keywords": [
+        "react",
+        "components",
+        "ui-library",
+        "tailwind",
+        "react-aria",
+        "typescript"
+    ],
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        },
+        "./styles": "./src/styles/globals.css"
+    },
+    "files": [
+        "dist",
+        "src/styles"
+    ],
     "scripts": {
         "dev": "next dev --turbopack",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "build:lib": "npx tsc -p tsconfig.build.json && node scripts/build-esm.js",
+        "prepublishOnly": "npm run build:lib",
+        "prepare": "npm run build:lib"
     },
     "dependencies": {
+        "@react-aria/utils": "^3.34.1",
+        "@react-stately/utils": "^3.12.1",
+        "@react-types/overlays": "^3.10.0",
         "@tailwindcss/postcss": "^4.2.2",
         "@tailwindcss/typography": "^0.5.19",
         "@untitledui/file-icons": "^0.0.9",
