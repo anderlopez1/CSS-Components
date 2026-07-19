@@ -4,8 +4,8 @@ import { cx } from "untitledui-components";
 /** Renders a resolved Pexels photo, or a quiet placeholder in local dev
  * (before the deploy step fills in `url`). Aspect ratio is enforced by the
  * ph-hero / ph-photo classes so agent photo choices can't break layout. */
-export function Photo({ photo, kind = "photo", className }: { photo: PhotoSpec; kind?: "hero" | "photo"; className?: string }) {
-    const slot = kind === "hero" ? "ph-hero" : "ph-photo";
+export function Photo({ photo, kind = "photo", className }: { photo: PhotoSpec; kind?: "hero" | "photo" | "bg"; className?: string }) {
+    const slot = kind === "hero" ? "ph-hero" : kind === "bg" ? "ph-bg" : "ph-photo";
 
     if (!photo.url) {
         return (

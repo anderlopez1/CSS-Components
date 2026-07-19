@@ -22,3 +22,11 @@ html {
     width: 100%;
     object-fit: cover;
 }
+/* Full-bleed background slot (image-bg hero): fills its positioned parent. */
+.ph-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

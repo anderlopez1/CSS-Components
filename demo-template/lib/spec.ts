@@ -35,7 +35,10 @@ export interface HeaderSection {
 
 export interface HeroSection {
     type: "hero";
-    variant: "split-photo" | "centered";
+    /** image-bg: full-bleed photo behind the headline (best for visually rich
+     * businesses); split-photo: text + framed photo side by side; centered:
+     * centered text with the photo below. */
+    variant: "image-bg" | "split-photo" | "centered";
     /** Small pill above the headline, e.g. "Seit 1998 in Zürich" */
     badge?: string;
     headline: string;
@@ -144,6 +147,9 @@ export interface CustomSection {
     component: string;
     /** Arbitrary props forwarded to the custom component. */
     props?: Record<string, unknown>;
+    /** Photo slots for this section — resolved to real stock-photo URLs at
+     * deploy time and passed to the component as a `photos` prop. */
+    photos?: Photo[];
 }
 
 export type Section =

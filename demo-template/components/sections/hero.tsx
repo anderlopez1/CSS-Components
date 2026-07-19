@@ -3,6 +3,39 @@ import { Photo } from "@/components/photo";
 import type { HeroSection } from "@/lib/spec";
 
 export function Hero({ section }: { section: HeroSection }) {
+    if (section.variant === "image-bg") {
+        return (
+            <section className="relative isolate overflow-hidden">
+                <div className="absolute inset-0 -z-20">
+                    <Photo photo={section.photo} kind="bg" />
+                </div>
+                {/* Legibility scrim over the photo — always dark, regardless of theme. */}
+                <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/75 via-black/45 to-black/25" aria-hidden="true" />
+                <div className="mx-auto flex min-h-[75vh] max-w-7xl flex-col justify-end px-4 pt-32 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+                    {section.badge && (
+                        <span className="inline-flex w-fit items-center rounded-full bg-white/15 px-3.5 py-1 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur">
+                            {section.badge}
+                        </span>
+                    )}
+                    <h1 className="mt-5 max-w-3xl text-display-md font-semibold tracking-tight text-white sm:text-display-lg">
+                        {section.headline}
+                    </h1>
+                    <p className="mt-6 max-w-2xl text-lg text-pretty text-white/85 sm:text-xl">{section.sub}</p>
+                    <div className="mt-10 flex flex-wrap gap-4">
+                        <Button href={section.primaryCta.href} size="xl">
+                            {section.primaryCta.label}
+                        </Button>
+                        {section.secondaryCta && (
+                            <Button href={section.secondaryCta.href} size="xl" color="secondary">
+                                {section.secondaryCta.label}
+                            </Button>
+                        )}
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     if (section.variant === "centered") {
         return (
             <section className="bg-primary">

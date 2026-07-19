@@ -40,7 +40,9 @@ export function SectionRenderer({ section, agencyCredit }: { section: Section; a
             return <Footer section={section} agencyCredit={agencyCredit} />;
         case "custom": {
             const Custom = CUSTOM_SECTIONS[section.component];
-            return Custom ? <Custom {...(section.props ?? {})} /> : null;
+            // Resolved photo slots are forwarded as a `photos` prop so
+            // agent-written sections can use real stock photos too.
+            return Custom ? <Custom {...(section.props ?? {})} photos={section.photos ?? []} /> : null;
         }
         default:
             return null;
