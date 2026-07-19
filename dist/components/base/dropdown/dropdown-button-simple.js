@@ -1,0 +1,7 @@
+"use client";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { ChevronDown } from "@untitledui/icons";
+import { SubmenuTrigger } from "react-aria-components";
+import { Button } from "../../../components/base/buttons/button";
+import { Dropdown } from "../../../components/base/dropdown/dropdown";
+export const DropdownButtonSimple = () => (_jsxs(Dropdown.Root, { children: [_jsx(Button, { size: "sm", color: "secondary", iconTrailing: ChevronDown, className: "group *:data-icon:size-4 *:data-icon:stroke-[2.25px]!", children: "Account" }), _jsx(Dropdown.Popover, { className: "w-54", children: _jsxs(Dropdown.Menu, { children: [_jsxs(Dropdown.Section, { children: [_jsx(Dropdown.Item, { addon: "\u2318X", children: "Cut" }), _jsx(Dropdown.Item, { addon: "\u2318C", children: "Copy" }), _jsx(Dropdown.Item, { addon: "\u2318V", children: "Paste" })] }), _jsx(Dropdown.Separator, {}), _jsxs(Dropdown.Section, { children: [_jsx(Dropdown.Item, { children: "Edit" }), _jsx(Dropdown.Item, { children: "Duplicate" }), _jsx(Dropdown.Item, { children: "Delete" })] }), _jsx(Dropdown.Separator, {}), _jsx(Dropdown.Section, { children: _jsxs(SubmenuTrigger, { children: [_jsx(Dropdown.Item, { children: "View details" }), _jsx(Dropdown.Popover, { placement: "right top", offset: -6, className: "w-50", children: _jsxs(Dropdown.Menu, { children: [_jsx(Dropdown.Item, { children: "Share" }), _jsx(Dropdown.Item, { children: "Save as" }), _jsx(Dropdown.Item, { children: "Archive" })] }) })] }) })] }) })] }));

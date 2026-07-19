@@ -1,0 +1,1 @@
+{"version":3,"file":"tailwind-css-icon.d.ts","sourceRoot":"","sources":["../../../../src/components/foundations/integration-icons/tailwind-css-icon.tsx"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,OAAO,CAAC;AAEtC,QAAA,MAAM,eAAe,GAAI,yBAAyB,QAAQ,CAAC,aAAa,CAAC,GAAG;IAAE,SAAS,CAAC,EAAE,OAAO,CAAA;CAAE,gCASlG,CAAC;AAEF,eAAe,eAAe,CAAC"}

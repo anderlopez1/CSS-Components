@@ -1,0 +1,15 @@
+import type { ReactNode } from "react";
+type HeaderNavItem = {
+    label: string;
+    href?: string;
+    menu?: ReactNode;
+};
+interface HeaderProps {
+    items?: HeaderNavItem[];
+    isFullWidth?: boolean;
+    isFloating?: boolean;
+    className?: string;
+}
+export declare const Header: ({ items, isFullWidth, isFloating, className }: HeaderProps) => import("react").JSX.Element;
+export {};
+//# sourceMappingURL=header.d.ts.map

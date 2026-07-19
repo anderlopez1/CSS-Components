@@ -41,8 +41,7 @@
         "build": "next build",
         "start": "next start",
         "build:lib": "npx tsc -p tsconfig.build.json && npx tsc-alias -p tsconfig.build.json && node scripts/build-esm.js",
-        "prepublishOnly": "npm run build:lib",
-        "prepare": "npm run build:lib"
+        "prepublishOnly": "npm run build:lib"
     },
     "dependencies": {
         "@react-aria/utils": "^3.34.1",

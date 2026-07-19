@@ -1,0 +1,16 @@
+import { type FC, type ReactNode } from "react";
+interface NavMenuItemLinkProps {
+    href: string;
+    icon?: FC<{
+        className?: string;
+    }> | ReactNode;
+    iconClassName?: string;
+    className?: string;
+    title: string;
+    subtitle?: string;
+    badge?: ReactNode;
+    actionsContent?: ReactNode;
+}
+export declare const NavMenuItemLink: ({ href, icon: Icon, iconClassName, title, badge, subtitle, className, actionsContent }: NavMenuItemLinkProps) => import("react").JSX.Element;
+export {};
+//# sourceMappingURL=nav-menu-item.d.ts.map

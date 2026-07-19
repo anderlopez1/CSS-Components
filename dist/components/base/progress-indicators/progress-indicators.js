@@ -1,0 +1,33 @@
+"use client";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { cx } from "../../../utils/cx";
+/**
+ * A basic progress bar component.
+ */
+export const ProgressBarBase = ({ value, min = 0, max = 100, className, progressClassName }) => {
+    const percentage = ((value - min) * 100) / (max - min);
+    return (_jsx("div", { role: "progressbar", "aria-valuenow": value, "aria-valuemin": min, "aria-valuemax": max, className: cx("h-2 w-full overflow-hidden rounded-md bg-quaternary", className), children: _jsx("div", { 
+            // Use transform instead of width to avoid layout thrashing (and for smoother animation)
+            style: { transform: `translateX(-${100 - percentage}%)` }, className: cx("size-full rounded-md bg-fg-brand-primary transition duration-75 ease-linear", progressClassName) }) }));
+};
+/**
+ * A progress bar component that displays the value text in various configurable layouts.
+ */
+export const ProgressBar = ({ value, min = 0, max = 100, valueFormatter, labelPosition, className, progressClassName }) => {
+    const percentage = ((value - min) * 100) / (max - min);
+    const formattedValue = valueFormatter ? valueFormatter(value, percentage) : `${percentage.toFixed(0)}%`; // Default to rounded percentage
+    const baseProgressBar = _jsx(ProgressBarBase, { min: min, max: max, value: value, className: className, progressClassName: progressClassName });
+    switch (labelPosition) {
+        case "right":
+            return (_jsxs("div", { className: "flex items-center gap-3", children: [baseProgressBar, _jsx("span", { className: "shrink-0 text-sm font-medium text-secondary tabular-nums", children: formattedValue })] }));
+        case "bottom":
+            return (_jsxs("div", { className: "flex flex-col items-end gap-2", children: [baseProgressBar, _jsx("span", { className: "text-sm font-medium text-secondary tabular-nums", children: formattedValue })] }));
+        case "top-floating":
+            return (_jsxs("div", { className: "relative flex flex-col items-end gap-2", children: [baseProgressBar, _jsx("div", { style: { left: `${percentage}%` }, className: "absolute -top-2 -translate-x-1/2 -translate-y-full rounded-lg bg-primary_alt px-3 py-2 shadow-lg ring-1 ring-secondary_alt", children: _jsx("div", { className: "text-xs font-semibold text-secondary tabular-nums", children: formattedValue }) })] }));
+        case "bottom-floating":
+            return (_jsxs("div", { className: "relative flex flex-col items-end gap-2", children: [baseProgressBar, _jsx("div", { style: { left: `${percentage}%` }, className: "absolute -bottom-2 -translate-x-1/2 translate-y-full rounded-lg bg-primary_alt px-3 py-2 shadow-lg ring-1 ring-secondary_alt", children: _jsx("div", { className: "text-xs font-semibold text-secondary", children: formattedValue }) })] }));
+        default:
+            // Fallback or default case, could render the basic progress bar or throw an error
+            return baseProgressBar;
+    }
+};

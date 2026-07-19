@@ -1,0 +1,9 @@
+import type { RefAttributes } from "react";
+import { type ButtonProps as AriaButtonProps } from "react-aria-components";
+interface TagCloseXProps extends AriaButtonProps, RefAttributes<HTMLButtonElement> {
+    size?: "sm" | "md" | "lg";
+    className?: string;
+}
+export declare const TagCloseX: ({ size, className, ...otherProps }: TagCloseXProps) => import("react").JSX.Element;
+export {};
+//# sourceMappingURL=tag-close-x.d.ts.map
