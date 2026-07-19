@@ -1,3 +1,6 @@
+// Utilities
+export { cx, sortCx } from './utils/cx';
+
 // Base Components - Buttons
 export { Button } from './components/base/buttons/button';
 export { SocialButton } from './components/base/buttons/social-button';
