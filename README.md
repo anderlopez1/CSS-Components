@@ -1,56 +1,81 @@
-# Untitled UI starter kit for Next.js
+# CSS-Components — Untitled UI component library & site template
 
-This is an official Untitled UI starter kit for Next.js. Kickstart your Untitled UI project with Next.js in seconds.
+One repo, three things:
 
-## Untitled UI React
+1. **`untitledui-components`** — a React component library (200+ components) built on
+   [Untitled UI React](https://www.untitledui.com/react): React 19, React Aria,
+   Tailwind CSS v4, TypeScript, and a full semantic design-token system.
+   Installable in any project straight from GitHub — no npm registry needed.
+2. **[`demo-template/`](demo-template/)** — a spec-driven Next.js site template that
+   renders a `site.spec.json` using this library. It powers the automated demo-site
+   pipeline in the (private) `agentic-agency` repo: an AI agent writes the spec, the
+   template guarantees the design quality. See [demo-template/README.md](demo-template/README.md).
+3. **The original Untitled UI Next.js starter kit** (`src/app/…`) — still runs with
+   `npm run dev` for browsing components locally.
 
-[Untitled UI React](https://www.untitledui.com/react) is the world’s largest collection of open-source React UI components. Everything you need to design and develop modern, beautiful interfaces—fast.
-
-Built with React 19.1, Tailwind CSS v4.1, TypeScript 5.8, and React Aria, Untitled UI React components deliver modern performance, type safety, and maintainability.
-
-[Learn more](https://www.untitledui.com/react) • [Documentation](https://www.untitledui.com/react/docs/introduction) • [Figma](https://www.untitledui.com/figma) • [FAQs](https://www.untitledui.com/faqs)
-
-## Getting started
-
-First, run the development server:
+## Using the component library in your project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install github:anderlopez1/CSS-Components
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```tsx
+// 1. Import the styles once, in your global stylesheet:
+//    @import "untitledui-components/styles";
+// 2. Use the components:
+import { Button, Badge, Input, FeaturedIcon, cx } from "untitledui-components";
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<Button size="lg" color="primary">Get started</Button>
+```
 
-## Resources
+The package ships its compiled `dist/` in the repo, so installs are instant and need
+no build step or GitHub credentials (the repo is public).
 
-Untitled UI React is built on top of [Untitled UI Figma](https://www.untitledui.com/figma), the world's largest and most popular Figma UI kit and design system. Explore more:
+### Theming
 
-**[Untitled UI Figma:](https://www.untitledui.com/react/resources/figma-files)** The world's largest Figma UI kit and design system.
-<br/>
-**[Untitled UI Icons:](https://www.untitledui.com/react/resources/icons)** A clean, consistent, and neutral icon library crafted specifically for modern UI design.
-<br/>
-**[Untitled UI file icons:](https://www.untitledui.com/react/resources/file-icons)** Free file format icons, designed specifically for modern web and UI design.
-<br/>
-**[Untitled UI flag icons:](https://www.untitledui.com/react/resources/flag-icons)** Free country flag icons, designed specifically for modern web and UI design.
-<br/>
-**[Untitled UI avatars:](https://www.untitledui.com/react/resources/avatars)** Free placeholder user avatars and profile pictures to use in your projects.
-<br/>
-**[Untitled UI logos:](https://www.untitledui.com/react/resources/logos)** Free fictional company logos to use in your projects.
+Every brand-colored token (`bg-brand-solid`, `text-brand-secondary`, …) chains
+through `var(--color-brand-{25..950})` — override those variables at `:root` to
+re-theme the entire system:
 
-## License
+```css
+:root {
+    --color-brand-600: #0d9488; /* teal instead of the default purple */
+    /* … override the full 25–950 scale for best results */
+}
+```
 
-Untitled UI React open-source components are licensed under the MIT license, which means you can use them for free in unlimited commercial projects.
+## Developing the library
 
-> [!NOTE]
-> This license applies only to the starter kit and to the components included in this open-source repository. [Untitled UI React PRO](https://www.untitledui.com/react) includes hundreds more advanced UI components and page examples and is subject to a separate [license agreement](https://www.untitledui.com/license).
+Component source lives in `src/components/`; the public API is `src/index.ts`.
 
-[Untitled UI license agreement →](https://www.untitledui.com/license)
+```bash
+npm run dev        # browse components via the Next.js starter kit
+npm run build:lib  # compile the library to dist/ (tsc + tsc-alias)
+```
 
-[Frequently asked questions →](https://www.untitledui.com/faqs)
+**⚠️ After changing `src/`, always run `npm run build:lib` and commit the updated
+`dist/`** — consumers install the committed dist, not the source.
+
+Conventions (see [CLAUDE.md](CLAUDE.md) for the full guide): kebab-case filenames,
+`Aria*`-prefixed react-aria-components imports, semantic color tokens only
+(`text-primary`, not `text-gray-900`).
+
+## Repo map
+
+| Path | What |
+|---|---|
+| `src/components/` | Component source (base / application / foundations / marketing / shared-assets) |
+| `src/index.ts` | Library entry point — everything exported here is public API |
+| `src/styles/` | Tailwind v4 theme: semantic tokens, typography (shipped with the package) |
+| `dist/` | Compiled library (committed — keep in sync with src) |
+| `demo-template/` | Spec-driven demo-site template (own README) |
+| `src/app/` | Starter-kit pages for local component browsing |
+
+## Upstream & license
+
+Based on the official [Untitled UI React](https://www.untitledui.com/react) starter
+kit ([docs](https://www.untitledui.com/react/docs/introduction) ·
+[Figma](https://www.untitledui.com/figma) · [icons](https://www.untitledui.com/react/resources/icons)).
+The open-source components are MIT-licensed; this license applies to the starter kit
+and the components in this repository only — [Untitled UI React PRO](https://www.untitledui.com/react)
+is subject to a separate [license agreement](https://www.untitledui.com/license).
