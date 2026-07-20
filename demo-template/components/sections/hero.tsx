@@ -12,8 +12,14 @@ export function Hero({ section }: { section: HeroSection }) {
                 <div className="absolute inset-0">
                     <Photo photo={section.photo} kind="bg" />
                 </div>
-                {/* Legibility scrim over the photo — always dark, regardless of theme. */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-black/25" aria-hidden="true" />
+                {/* Legibility scrim. Uses an explicit rgba() gradient rather than
+                    Tailwind color stops (from-black/75 …): those compile to
+                    oklab(0 0 0 / α), whose alpha was dropped in the deployed
+                    build — the scrim then painted opaque and hid the photo. */}
+                <div
+                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.45)_50%,rgba(0,0,0,0.25)_100%)]"
+                    aria-hidden="true"
+                />
                 <div className="relative z-10 mx-auto flex min-h-[75vh] max-w-7xl flex-col justify-end px-4 pt-32 pb-16 sm:px-6 sm:pb-24 lg:px-8">
                     {section.badge && (
                         <span className="inline-flex w-fit items-center rounded-full bg-white/15 px-3.5 py-1 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur">
