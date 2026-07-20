@@ -1,0 +1,26 @@
+{
+    "name": "kwipps-dashboard",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Internal ops dashboard for the Kwipps pipeline: agent activity, generated designs & versions, batches, config. Server-rendered; data via Supabase REST with env-injected credentials. Deployed by the admin-deploy-dashboard edge function with Vercel SSO protection ON.",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@untitledui/icons": "^0.0.22",
+        "next": "16.2.0",
+        "react": "^19.2.4",
+        "react-dom": "^19.2.4",
+        "untitledui-components": "github:anderlopez1/CSS-Components"
+    },
+    "devDependencies": {
+        "@tailwindcss/postcss": "^4.2.2",
+        "@types/node": "^25.5.0",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
+        "tailwindcss": "^4.2.2",
+        "typescript": "^5.9.3"
+    }
+}

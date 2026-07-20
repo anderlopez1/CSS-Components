@@ -1,0 +1,5 @@
+/* Full Untitled UI system: Tailwind v4, semantic tokens, typography, plugins. */
+@import "untitledui-components/styles";
+
+/* The library ships compiled JS — scan it so component class names are generated. */
+@source "../node_modules/untitledui-components/dist";
