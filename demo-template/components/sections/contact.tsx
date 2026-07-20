@@ -1,11 +1,12 @@
 import { Clock, Mail01, MarkerPin01, Phone } from "@untitledui/icons";
 import { Photo } from "@/components/photo";
 import type { ContactSection } from "@/lib/spec";
+import { toneClass } from "@/lib/tone";
 
 export function Contact({ section }: { section: ContactSection }) {
     return (
-        <section id={section.id ?? "contact"} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-2">
+        <section id={section.id ?? "contact"} className={toneClass(section.tone)}>
+            <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:px-8">
                 <div>
                     <h2 className="text-display-sm font-semibold tracking-tight text-primary sm:text-display-md">{section.headline}</h2>
                     <dl className="mt-8 space-y-5">

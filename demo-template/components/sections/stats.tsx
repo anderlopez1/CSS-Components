@@ -1,5 +1,6 @@
 import { cx } from "untitledui-components";
 import type { StatsSection } from "@/lib/spec";
+import { toneClass } from "@/lib/tone";
 
 // Tailwind can only see literal class names — never build them dynamically.
 const COLS: Record<number, string> = {
@@ -11,12 +12,14 @@ const COLS: Record<number, string> = {
 
 export function Stats({ section }: { section: StatsSection }) {
     return (
-        <section className="border-y border-secondary bg-secondary">
+        <section className={cx("border-y border-secondary", section.tone ? toneClass(section.tone) : "bg-secondary")}>
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
                 <dl className={cx("grid grid-cols-2 gap-8 text-center", COLS[Math.min(section.items.length, 4)])}>
                     {section.items.map((stat) => (
                         <div key={stat.label}>
-                            <dd className="text-display-md font-semibold text-brand-tertiary">{stat.value}</dd>
+                            {/* fg-brand-primary stays brand-colored in dark tone
+                                (text-brand-tertiary maps to gray there). */}
+                            <dd className="text-display-md font-semibold text-fg-brand-primary">{stat.value}</dd>
                             <dt className="mt-2 text-sm font-medium text-tertiary">{stat.label}</dt>
                         </div>
                     ))}

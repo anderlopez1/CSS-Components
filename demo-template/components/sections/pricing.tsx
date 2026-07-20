@@ -1,10 +1,12 @@
 import { CheckCircle } from "@untitledui/icons";
 import { Badge, Button, cx } from "untitledui-components";
 import type { PricingSection } from "@/lib/spec";
+import { toneClass } from "@/lib/tone";
 
 export function Pricing({ section }: { section: PricingSection }) {
     return (
-        <section id={section.id ?? "pricing"} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <section id={section.id ?? "pricing"} className={toneClass(section.tone)}>
+            <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
                 <h2 className="text-display-sm font-semibold tracking-tight text-primary sm:text-display-md">{section.headline}</h2>
                 {section.sub && <p className="mt-4 text-lg text-pretty text-tertiary">{section.sub}</p>}
@@ -46,6 +48,7 @@ export function Pricing({ section }: { section: PricingSection }) {
                         </div>
                     </div>
                 ))}
+            </div>
             </div>
         </section>
     );

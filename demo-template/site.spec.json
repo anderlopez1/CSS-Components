@@ -6,7 +6,8 @@
         "lang": "de"
     },
     "brand": {
-        "palette": "rose"
+        "palette": "rose",
+        "theme": "light"
     },
     "agencyCredit": "Demo-Konzept erstellt von Kwipps",
     "sections": [
@@ -77,7 +78,8 @@
                     "title": "Ausgezeichnete Weinkarte",
                     "body": "Über 120 Positionen aus allen Regionen Italiens, vom Barolo bis zum sizilianischen Naturwein."
                 }
-            ]
+            ],
+            "tone": "muted"
         },
         {
             "type": "stats",
@@ -98,7 +100,8 @@
                     "value": "90s",
                     "label": "Pizza-Backzeit"
                 }
-            ]
+            ],
+            "tone": "dark"
         },
         {
             "type": "gallery",
@@ -146,7 +149,8 @@
                     "q": "Kann man bei Ihnen private Anlässe feiern?",
                     "a": "Unser Saal im Untergeschoss bietet Platz für bis zu 40 Personen — ideal für Geburtstage, Firmenessen und Familienfeiern. Kontaktieren Sie uns für ein Menü-Angebot."
                 }
-            ]
+            ],
+            "tone": "muted"
         },
         {
             "type": "cta",

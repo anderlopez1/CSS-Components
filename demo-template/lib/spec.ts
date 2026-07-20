@@ -17,6 +17,11 @@ export interface NavLink {
     href: string;
 }
 
+/** Background treatment for a content section. "default" inherits the page
+ * background, "muted" is a soft gray band, "dark" flips the section to the
+ * dark-mode token set (dramatic accent band — use sparingly on light sites). */
+export type SectionTone = "default" | "muted" | "dark";
+
 export interface Cta {
     label: string;
     href: string;
@@ -57,6 +62,7 @@ export interface FeatureItem {
 
 export interface FeaturesSection {
     type: "features";
+    tone?: SectionTone;
     variant: "icon-cards" | "simple";
     id?: string;
     headline: string;
@@ -66,11 +72,13 @@ export interface FeaturesSection {
 
 export interface StatsSection {
     type: "stats";
+    tone?: SectionTone;
     items: { value: string; label: string }[];
 }
 
 export interface GallerySection {
     type: "gallery";
+    tone?: SectionTone;
     headline: string;
     photos: Photo[];
 }
@@ -86,6 +94,7 @@ export interface TestimonialItem {
 
 export interface TestimonialsSection {
     type: "testimonials";
+    tone?: SectionTone;
     variant: "single-dark" | "grid";
     id?: string;
     headline?: string;
@@ -104,6 +113,7 @@ export interface PricingTier {
 
 export interface PricingSection {
     type: "pricing";
+    tone?: SectionTone;
     id?: string;
     headline: string;
     sub?: string;
@@ -112,6 +122,7 @@ export interface PricingSection {
 
 export interface FaqSection {
     type: "faq";
+    tone?: SectionTone;
     headline: string;
     items: { q: string; a: string }[];
 }
@@ -125,6 +136,7 @@ export interface CtaSection {
 
 export interface ContactSection {
     type: "contact";
+    tone?: SectionTone;
     id?: string;
     headline: string;
     address?: string;
@@ -180,6 +192,10 @@ export interface SiteSpec {
     brand: {
         /** One of the palette names in lib/brand.ts */
         palette: string;
+        /** Site-wide theme. "dark" flips the entire Untitled UI token set —
+         * strong fit for premium/evening businesses (barbers, bars, tattoo,
+         * upscale restaurants). Defaults to "light". */
+        theme?: "light" | "dark";
         /** Optional exact-hex overrides for individual stops, e.g. {"600": "#0f766e"} */
         custom?: Record<string, string>;
     };

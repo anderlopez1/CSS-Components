@@ -1,5 +1,6 @@
 import { Avatar, RatingStars } from "untitledui-components";
 import type { TestimonialsSection } from "@/lib/spec";
+import { toneClass } from "@/lib/tone";
 
 function initials(name: string): string {
     return name
@@ -37,7 +38,7 @@ export function Testimonials({ section }: { section: TestimonialsSection }) {
 
     // grid
     return (
-        <section id={section.id ?? "reviews"} className="bg-secondary">
+        <section id={section.id ?? "reviews"} className={section.tone ? toneClass(section.tone) : "bg-secondary"}>
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 {section.headline && (
                     <h2 className="text-center text-display-sm font-semibold tracking-tight text-primary sm:text-display-md">
