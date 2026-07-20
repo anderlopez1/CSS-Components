@@ -2,12 +2,20 @@ import { Button } from "untitledui-components";
 import type { HeaderSection } from "@/lib/spec";
 
 export function Header({ section }: { section: HeaderSection }) {
+    // logoText + logoAccent are meant to be two halves of the business name
+    // ("Trattoria" + "Bella Vista"). Models sometimes repeat a word that is
+    // already in logoText ("Amo Coiffeur" + "Amo"), so drop a redundant accent
+    // rather than rendering "Amo Coiffeur Amo".
+    const accent = section.logoAccent?.trim();
+    const words = section.logoText.toLowerCase().split(/\s+/);
+    const isRedundant = !accent || accent.toLowerCase().split(/\s+/).every((w) => words.includes(w));
+
     return (
         <header className="sticky top-0 z-40 border-b border-secondary bg-primary/90 backdrop-blur">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 <a href="#" className="text-xl font-bold tracking-tight text-primary">
                     {section.logoText}
-                    {section.logoAccent && <span className="text-brand-secondary"> {section.logoAccent}</span>}
+                    {!isRedundant && <span className="text-brand-secondary"> {accent}</span>}
                 </a>
                 <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
                     {section.nav.map((link) => (
