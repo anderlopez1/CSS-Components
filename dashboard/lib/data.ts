@@ -92,10 +92,22 @@ export interface ConfigRow {
     updated_at: string;
 }
 
+export interface TokenUsage {
+    id: string;
+    agent: string;
+    model: string;
+    is_batch: boolean;
+    input_tokens: number;
+    output_tokens: number;
+    cache_creation_tokens: number;
+    cache_read_tokens: number;
+    created_at: string;
+}
+
 // ------------------------------------------------------------------ queries
 
 export async function fetchAll() {
-    const [leads, sites, runs, batches, emails, replies, refinements, config] = await Promise.all([
+    const [leads, sites, runs, batches, emails, replies, refinements, config, usage] = await Promise.all([
         sb<Lead>("leads?select=id,name,category,status,source,created_at&order=created_at.desc"),
         sb<Site>("sites?select=id,lead_id,vercel_url,vercel_deployment_id,created_at,spec&order=created_at.desc&limit=100"),
         sb<AgentRun>("agent_runs?select=id,agent,detail,created_at&order=created_at.desc&limit=30"),
@@ -104,6 +116,10 @@ export async function fetchAll() {
         sb<Reply>("replies?select=id,classification,needs_human"),
         sb<Refinement>("refinements?select=lead_id,overall_score,ready_to_send,created_at&order=created_at.desc"),
         sb<ConfigRow>("pipeline_config?select=key,value,updated_at"),
+        // 5000 most recent calls ≈ months of pipeline volume at current cadence.
+        sb<TokenUsage>(
+            "token_usage?select=id,agent,model,is_batch,input_tokens,output_tokens,cache_creation_tokens,cache_read_tokens,created_at&order=created_at.desc&limit=5000",
+        ),
     ]);
-    return { leads, sites, runs, batches, emails, replies, refinements, config };
+    return { leads, sites, runs, batches, emails, replies, refinements, config, usage };
 }

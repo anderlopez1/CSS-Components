@@ -1,5 +1,6 @@
-import { Flash, Mail01, MessageChatCircle, Palette, Users01 } from "@untitledui/icons";
+import { CurrencyDollarCircle, Flash, Mail01, MessageChatCircle, Palette, Users01 } from "@untitledui/icons";
 import { Badge, BadgeWithDot, Button } from "untitledui-components";
+import { aggregate, costUsd, DEFAULT_PRICING, fmtTokens, fmtUsd, type Pricing } from "@/lib/cost";
 import { fetchAll, hasCredentials, type Site } from "@/lib/data";
 import { Kpi, PaletteBadge, SectionCard, StatusBadge, Td, Th, ThemeBadge, timeAgo } from "@/components/ui";
 
@@ -30,7 +31,7 @@ function specSummary(site: Site) {
 }
 
 export default async function Page() {
-    const { leads, sites, runs, batches, emails, replies, refinements, config } = await fetchAll();
+    const { leads, sites, runs, batches, emails, replies, refinements, config, usage } = await fetchAll();
 
     // ---- derived stats -----------------------------------------------------
     const statusCounts = new Map<string, number>();
@@ -55,6 +56,13 @@ export default async function Page() {
     const cfg = new Map(config.map((c) => [c.key, c.value]));
     const gen = (cfg.get("site_generation") ?? {}) as { mode?: string; maxCustomSections?: number };
     const models = (cfg.get("models") ?? {}) as Record<string, string>;
+
+    // ---- spend (tokens × rate card) ----------------------------------------
+    const pricing = { ...DEFAULT_PRICING, ...((cfg.get("model_pricing") ?? {}) as Partial<Pricing>) };
+    const totalSpend = usage.reduce((sum, r) => sum + costUsd(r, pricing), 0);
+    const spendByAgent = aggregate(usage, pricing, (r) => r.agent);
+    const spendByModel = aggregate(usage, pricing, (r) => r.model);
+    const trackingSince = usage.length ? usage[usage.length - 1].created_at : null;
 
     return (
         <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -87,12 +95,18 @@ export default async function Page() {
             )}
 
             {/* ------------------------------------------------------- KPIs --- */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
                 <Kpi icon={Users01} label="Leads" value={leads.length} hint={`${statusCounts.get("briefed") ?? 0} briefed`} />
                 <Kpi icon={Palette} label="Designs built" value={sites.length} hint={`${sites.filter((s) => s.spec).length} spec-driven`} />
                 <Kpi icon={Mail01} label="Emails sent" value={emailsSent} hint={`${emails.length} drafted`} />
                 <Kpi icon={MessageChatCircle} label="Replies" value={replies.length} hint={`${needsHuman} need a human`} />
                 <Kpi icon={Flash} label="Open batches" value={openBatches} hint={`${batches.length} recent total`} />
+                <Kpi
+                    icon={CurrencyDollarCircle}
+                    label="Total spend"
+                    value={fmtUsd(totalSpend)}
+                    hint={trackingSince ? `${usage.length} calls since ${trackingSince.slice(0, 10)}` : "no usage recorded yet"}
+                />
             </div>
 
             {/* --------------------------------------------- funnel + config --- */}
@@ -132,6 +146,103 @@ export default async function Page() {
                             </div>
                         ))}
                     </dl>
+                </SectionCard>
+            </div>
+
+            {/* ------------------------------------------------------ spend --- */}
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <SectionCard title="Spend by agent">
+                    <div className="overflow-x-auto">
+                        <table className="w-full min-w-[480px]">
+                            <thead className="border-b border-secondary bg-secondary">
+                                <tr>
+                                    <Th>Agent</Th>
+                                    <Th>Calls</Th>
+                                    <Th>Tokens in</Th>
+                                    <Th>Tokens out</Th>
+                                    <Th className="text-right">Cost</Th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-secondary">
+                                {spendByAgent.map((b) => (
+                                    <tr key={b.key}>
+                                        <Td className="whitespace-nowrap">
+                                            <Badge color="brand" type="pill-color" size="sm">
+                                                {AGENT_LABELS[b.key] ?? b.key}
+                                            </Badge>
+                                        </Td>
+                                        <Td>{b.calls}</Td>
+                                        <Td>{fmtTokens(b.inputTokens)}</Td>
+                                        <Td>{fmtTokens(b.outputTokens)}</Td>
+                                        <Td className="text-right font-medium text-primary">{fmtUsd(b.cost)}</Td>
+                                    </tr>
+                                ))}
+                                {spendByAgent.length > 0 && (
+                                    <tr className="bg-secondary">
+                                        <Td className="font-semibold text-primary">Total</Td>
+                                        <Td className="font-semibold text-primary">{usage.length}</Td>
+                                        <Td className="font-semibold text-primary">{fmtTokens(spendByAgent.reduce((s, b) => s + b.inputTokens, 0))}</Td>
+                                        <Td className="font-semibold text-primary">{fmtTokens(spendByAgent.reduce((s, b) => s + b.outputTokens, 0))}</Td>
+                                        <Td className="text-right font-semibold text-brand-secondary">{fmtUsd(totalSpend)}</Td>
+                                    </tr>
+                                )}
+                                {spendByAgent.length === 0 && (
+                                    <tr>
+                                        <Td className="py-8 text-center" colSpan={5 as never}>
+                                            No usage recorded yet — tracking starts with the first Claude call after 2026-07-20.
+                                        </Td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </SectionCard>
+
+                <SectionCard title="Spend by model">
+                    <div className="overflow-x-auto">
+                        <table className="w-full min-w-[420px]">
+                            <thead className="border-b border-secondary bg-secondary">
+                                <tr>
+                                    <Th>Model</Th>
+                                    <Th>Calls</Th>
+                                    <Th>Rate (in/out per MTok)</Th>
+                                    <Th className="text-right">Cost</Th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-secondary">
+                                {spendByModel.map((b) => {
+                                    const rate = pricing.models[b.key] ?? Object.entries(pricing.models).find(([k]) => b.key.startsWith(k))?.[1];
+                                    return (
+                                        <tr key={b.key}>
+                                            <Td className="max-w-56 truncate font-mono text-xs">{b.key}</Td>
+                                            <Td>{b.calls}</Td>
+                                            <Td className="whitespace-nowrap">
+                                                {rate ? (
+                                                    `$${rate.input} / $${rate.output}`
+                                                ) : (
+                                                    <BadgeWithDot color="warning" type="pill-color" size="sm">
+                                                        no rate — add to model_pricing
+                                                    </BadgeWithDot>
+                                                )}
+                                            </Td>
+                                            <Td className="text-right font-medium text-primary">{fmtUsd(b.cost)}</Td>
+                                        </tr>
+                                    );
+                                })}
+                                {spendByModel.length === 0 && (
+                                    <tr>
+                                        <Td className="py-8 text-center" colSpan={4 as never}>
+                                            No usage recorded yet.
+                                        </Td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p className="border-t border-secondary px-6 py-3 text-xs text-quaternary">
+                        Priced from pipeline_config.model_pricing (batch calls ×{pricing.batch_discount}, cache reads ×
+                        {pricing.cache_read_multiplier}). Sonnet 5 intro pricing ends 2026-08-31 — update the config row then.
+                    </p>
                 </SectionCard>
             </div>
 
