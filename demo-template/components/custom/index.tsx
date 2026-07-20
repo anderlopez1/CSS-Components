@@ -6,8 +6,9 @@
 // never touched. Agent 3 ensures every custom section is a CLIENT component
 // ("use client") so the documented component patterns — e.g. passing icon
 // references as props (iconLeading={Icon}) — work without RSC serialization
-// errors. Custom components have the full Untitled UI system available and
-// use semantic Tailwind tokens so they inherit the site's brand palette.
+// errors. FC<any>, not FC<Record<string, unknown>>: agent sections type
+// their own props (often required, e.g. photos), and a stricter record type
+// fails tsc on perfectly good components.
 import type { FC } from "react";
 
-export const CUSTOM_SECTIONS: Record<string, FC<Record<string, unknown>>> = {};
+export const CUSTOM_SECTIONS: Record<string, FC<any>> = {};
