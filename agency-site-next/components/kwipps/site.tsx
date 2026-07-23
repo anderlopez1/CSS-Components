@@ -492,8 +492,8 @@ function Footer() {
                     <div className="flex flex-col gap-2 text-sm md:items-end">
                         <a href="mailto:info@kwipps.com" className="hover:text-white">info@kwipps.com</a>
                         <div className="flex gap-5">
-                            <a href="https://kwipps.com/impressum.html" className="hover:text-white">{t("footer.impressum")}</a>
-                            <a href="https://kwipps.com/datenschutz.html" className="hover:text-white">{t("footer.datenschutz")}</a>
+                            <a href="/impressum.html" className="hover:text-white">{t("footer.impressum")}</a>
+                            <a href="/datenschutz.html" className="hover:text-white">{t("footer.datenschutz")}</a>
                         </div>
                     </div>
                 </div>

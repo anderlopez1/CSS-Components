@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go live — Kwipps</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16324F; --ink-2:#1e415f; --amber:#F0A826; --amber-dark:#d8940f;
+    --bg:#FAF9F6; --card:#ffffff; --slate:#334155; --muted:#64748b;
+    --line:#e7e5df; --radius:18px; --good:#1a7a4c; --bad:#b3261e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--slate);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;gap:16px}
+  .logo{font-weight:800;font-size:1.3rem;color:var(--ink);letter-spacing:-.03em;display:flex;align-items:center;gap:9px;text-decoration:none}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:var(--amber)}
+  .lang{display:flex;gap:2px;background:#eee7db;border-radius:999px;padding:3px}
+  .lang-btn{border:none;background:transparent;font-family:inherit;font-weight:600;font-size:.8rem;color:var(--muted);padding:5px 10px;border-radius:999px;cursor:pointer}
+  .lang-btn.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+  h1{color:var(--ink);font-size:1.9rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+  p.lead{color:var(--muted);font-size:1.02rem;margin-bottom:8px}
+  .biz{font-weight:700;color:var(--ink)}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 26px 28px;margin-top:22px}
+  .step h2{font-size:1.05rem;color:var(--ink);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .step h2 .n{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:.85rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .row{display:flex;gap:10px}
+  input[type=text]{flex:1;padding:12px 14px;border-radius:10px;border:1px solid var(--line);font-family:inherit;font-size:.98rem}
+  input[type=text]:focus{outline:none;border-color:var(--amber)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:.95rem;padding:12px 20px;border-radius:999px;transition:.15s;cursor:pointer;border:none;font-family:inherit}
+  .btn-primary{background:var(--amber);color:var(--ink)}
+  .btn-primary:hover{background:var(--amber-dark)}
+  .btn-primary:disabled{background:#e4dfd2;color:#9a998f;cursor:not-allowed}
+  .btn-ghost{background:#f1efe8;color:var(--ink)}
+  .domains{list-style:none;margin-top:16px;display:grid;gap:8px}
+  .dopt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
+  .dopt.picked{border-color:var(--amber);background:rgba(240,168,38,.08)}
+  .dopt.unavail{opacity:.45;cursor:not-allowed}
+  .dopt .name{flex:1;font-weight:600;color:var(--ink);font-size:.98rem}
+  .dopt .price{font-weight:700;color:var(--ink);font-size:.95rem}
+  .dopt .price.review{color:var(--bad);font-size:.82rem;font-weight:600}
+  .dopt .badge{font-size:.75rem;color:var(--muted)}
+  .plans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:4px}
+  .plan{border:1.5px solid var(--line);border-radius:12px;padding:16px 14px;cursor:pointer;text-align:center}
+  .plan.picked{border-color:var(--amber);background:rgba(240,168,38,.08)}
+  .plan .pname{font-weight:700;color:var(--ink);font-size:.98rem}
+  .plan .pamt{font-weight:800;color:var(--ink);font-size:1.15rem;margin-top:6px}
+  .plan .pamt small{font-weight:500;font-size:.75rem;color:var(--muted)}
+  @media(max-width:520px){.plans{grid-template-columns:1fr}}
+  .msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:.92rem}
+  .msg.err{background:#fbe9e7;color:var(--bad)}
+  .msg.info{background:#eaf2ff;color:#1e415f}
+  .muted{color:var(--muted);font-size:.85rem;margin-top:10px}
+  .final{margin-top:26px;display:flex;flex-direction:column;gap:10px;align-items:center}
+  .spinner{width:16px;height:16px;border-radius:50%;border:2px solid rgba(22,50,79,.25);border-top-color:var(--ink);animation:spin .7s linear infinite;display:inline-block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/" class="logo"><span class="dot"></span>Kwipps</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+
+  <div id="noLead" hidden>
+    <h1 data-i18n="nolead.h1">This link needs your details</h1>
+    <p class="lead">
+      <span data-i18n="nolead.p1">This page is personal to your preview request. Please use the "go live" link from your confirmation email, or write to us at </span>
+      <a href="mailto:info@kwipps.com" style="color:var(--ink);font-weight:600">info@kwipps.com</a>
+      <span data-i18n="nolead.p2"> and we'll set it up manually.</span>
+    </p>
+  </div>
+
+  <div id="app" hidden>
+    <h1 data-i18n="app.h1">Ready to go live?</h1>
+    <p class="lead"><span data-i18n="app.for">For</span> <span class="biz" id="bizName"></span> <span data-i18n="app.leadtail">— pick a domain and a plan, and we'll take it from there.</span></p>
+
+    <div class="step">
+      <h2><span class="n">1</span><span data-i18n="step1.h">Choose your domain</span></h2>
+      <div class="row">
+        <input type="text" id="domainQuery" data-i18n-ph="ph.domain" placeholder="Search a domain, e.g. yourbusiness.com">
+        <button class="btn btn-ghost" id="searchBtn" type="button" data-i18n="btn.search">Search</button>
+      </div>
+      <ul class="domains" id="domainList"></ul>
+      <p class="muted" data-i18n="step1.note">Priced live via our registrar. Domains above ~USD 150 need a quick manual review before we can buy them.</p>
+    </div>
+
+    <div class="step">
+      <h2><span class="n">2</span><span data-i18n="step2.h">Choose your plan</span></h2>
+      <div class="plans" id="planList">
+        <div class="plan" data-plan="starter"><div class="pname" data-i18n="plan.starter">Starter</div><div class="pamt">CHF 49<small data-i18n="plan.permo"> /mo</small></div></div>
+        <div class="plan" data-plan="growth"><div class="pname" data-i18n="plan.growth">Growth</div><div class="pamt">CHF 79<small data-i18n="plan.permo"> /mo</small></div></div>
+        <div class="plan" data-plan="partner"><div class="pname" data-i18n="plan.partner">Partner</div><div class="pamt">CHF 99<small data-i18n="plan.permo"> /mo</small></div></div>
+      </div>
+    </div>
+
+    <div class="final">
+      <button class="btn btn-primary" id="payBtn" disabled style="width:100%" data-i18n="btn.pay">Continue to payment →</button>
+      <p class="muted" id="payHint" data-i18n="hint.default">Pick a domain and a plan to continue.</p>
+    </div>
+    <div id="formMsg"></div>
+  </div>
+</div>
+<script>
+const I18N = {
+  en: {},
+  de: {
+    "nolead.h1":"Dieser Link braucht Ihre Angaben",
+    "nolead.p1":"Diese Seite ist persönlich für Ihre Vorschau-Anfrage. Bitte nutzen Sie den „Live gehen“-Link aus Ihrer Bestätigungs-E-Mail, oder schreiben Sie uns an ",
+    "nolead.p2":" — wir richten es dann manuell ein.",
+    "app.h1":"Bereit, live zu gehen?",
+    "app.for":"Für","app.leadtail":"— wählen Sie eine Domain und ein Paket, wir übernehmen den Rest.",
+    "step1.h":"Domain wählen","ph.domain":"Domain suchen, z. B. ihrgeschaeft.ch","btn.search":"Suchen",
+    "step1.note":"Live bepreist über unseren Registrar. Domains über ca. USD 150 benötigen eine kurze manuelle Prüfung, bevor wir sie kaufen können.",
+    "step2.h":"Paket wählen","plan.starter":"Starter","plan.growth":"Wachstum","plan.partner":"Partner","plan.permo":" / Mon.",
+    "btn.pay":"Weiter zur Zahlung →","hint.default":"Wählen Sie eine Domain und ein Paket, um fortzufahren.",
+    "hint.selected":"{domain} · Paket {plan}",
+    "js.searching":"Suche läuft…","js.searcherr":"Domains konnten gerade nicht gesucht werden. Versuchen Sie es gleich noch einmal.",
+    "js.taken":"vergeben","js.review":"Prüfung nötig",
+    "js.redirecting":"Weiterleitung zur Zahlung…",
+    "js.reviewmsg":"Diese Domain benötigt eine kurze manuelle Prüfung, bevor wir sie kaufen können.",
+    "js.reviewmsg2":" Schreiben Sie uns an info@kwipps.com, wir klären das für Sie.",
+    "js.checkouterr":"Beim Start der Zahlung ist etwas schiefgelaufen. Bitte versuchen Sie es erneut, oder schreiben Sie an info@kwipps.com.",
+    "js.yourbusiness":"Ihr Geschäft",
+  },
+  fr: {
+    "nolead.h1":"Ce lien a besoin de vos informations",
+    "nolead.p1":"Cette page est personnelle à votre demande d'aperçu. Veuillez utiliser le lien « passer en ligne » de votre e-mail de confirmation, ou écrivez-nous à ",
+    "nolead.p2":" et nous le configurerons manuellement.",
+    "app.h1":"Prêt à passer en ligne ?",
+    "app.for":"Pour","app.leadtail":"— choisissez un domaine et un forfait, nous nous occupons du reste.",
+    "step1.h":"Choisissez votre domaine","ph.domain":"Rechercher un domaine, ex. votrecommerce.ch","btn.search":"Rechercher",
+    "step1.note":"Tarifé en direct via notre registraire. Les domaines au-delà d'env. 150 USD nécessitent une brève vérification manuelle avant achat.",
+    "step2.h":"Choisissez votre forfait","plan.starter":"Starter","plan.growth":"Croissance","plan.partner":"Partenaire","plan.permo":" / mois",
+    "btn.pay":"Continuer vers le paiement →","hint.default":"Choisissez un domaine et un forfait pour continuer.",
+    "hint.selected":"{domain} · Forfait {plan}",
+    "js.searching":"Recherche en cours…","js.searcherr":"Impossible de rechercher des domaines pour le moment. Réessayez dans un instant.",
+    "js.taken":"pris","js.review":"vérification requise",
+    "js.redirecting":"Redirection vers le paiement…",
+    "js.reviewmsg":"Ce domaine nécessite une brève vérification manuelle avant que nous puissions l'acheter.",
+    "js.reviewmsg2":" Écrivez-nous à info@kwipps.com, nous réglerons cela pour vous.",
+    "js.checkouterr":"Une erreur s'est produite au démarrage du paiement. Merci de réessayer, ou écrivez à info@kwipps.com.",
+    "js.yourbusiness":"votre commerce",
+  },
+  es: {
+    "nolead.h1":"Este enlace necesita sus datos",
+    "nolead.p1":"Esta página es personal para su solicitud de vista previa. Utilice el enlace de «publicar» de su correo de confirmación, o escríbanos a ",
+    "nolead.p2":" y lo configuraremos manualmente.",
+    "app.h1":"¿Listo para publicar?",
+    "app.for":"Para","app.leadtail":"— elija un dominio y un plan, y nos encargamos del resto.",
+    "step1.h":"Elija su dominio","ph.domain":"Buscar un dominio, ej. sunegocio.ch","btn.search":"Buscar",
+    "step1.note":"Precio en vivo a través de nuestro registrador. Los dominios de más de USD 150 aprox. necesitan una breve revisión manual antes de comprarlos.",
+    "step2.h":"Elija su plan","plan.starter":"Starter","plan.growth":"Crecimiento","plan.partner":"Partner","plan.permo":" / mes",
+    "btn.pay":"Continuar al pago →","hint.default":"Elija un dominio y un plan para continuar.",
+    "hint.selected":"{domain} · Plan {plan}",
+    "js.searching":"Buscando…","js.searcherr":"No se pudieron buscar dominios en este momento. Inténtelo de nuevo en un momento.",
+    "js.taken":"no disponible","js.review":"revisión necesaria",
+    "js.redirecting":"Redirigiendo al pago…",
+    "js.reviewmsg":"Este dominio necesita una breve revisión manual antes de poder comprarlo.",
+    "js.reviewmsg2":" Escríbanos a info@kwipps.com y lo resolveremos por usted.",
+    "js.checkouterr":"Algo salió mal al iniciar el pago. Inténtelo de nuevo, o escriba a info@kwipps.com.",
+    "js.yourbusiness":"su negocio",
+  }
+};
+
+let currentLang = "en";
+function t(key, fallback){
+  const d = I18N[currentLang] || {};
+  return (currentLang !== "en" && d[key] != null) ? d[key] : fallback;
+}
+
+function setLang(l){
+  const d = I18N[l] || {};
+  currentLang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-i18n]").forEach(function(el){
+    const k = el.getAttribute("data-i18n");
+    if (l === "en") { return; } // English is the inline default
+    if (d[k] != null) el.textContent = d[k];
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(function(el){
+    const k = el.getAttribute("data-i18n-ph");
+    if (l !== "en" && d[k] != null) el.placeholder = d[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.lang === l); });
+  try { localStorage.setItem("kwipps_lang", l); } catch(e) {}
+  updatePayState();
+}
+// English is baked into the HTML; switching to EN after another language needs a reload to restore it.
+document.querySelectorAll(".lang-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    const l = b.dataset.lang, cur = document.documentElement.lang;
+    if (l === "en" && cur !== "en") { try{localStorage.setItem("kwipps_lang","en");}catch(e){} location.reload(); return; }
+    setLang(l);
+  });
+});
+(function(){
+  let saved = null; try { saved = localStorage.getItem("kwipps_lang"); } catch(e) {}
+  const nav = (navigator.language || "en").slice(0,2).toLowerCase();
+  const start = saved || (["de","en","fr","es"].indexOf(nav) >= 0 ? nav : "en");
+  setLang(start);
+})();
+
+const DOMAIN_SEARCH_URL = "https://nebrrtkdrsljywhkxxrs.supabase.co/functions/v1/domain-search";
+const CHECKOUT_URL = "https://nebrrtkdrsljywhkxxrs.supabase.co/functions/v1/checkout";
+
+const params = new URLSearchParams(location.search);
+const leadId = params.get("lead");
+const business = params.get("business") || "";
+
+let selectedDomain = null; // {domain, price}
+let selectedPlan = null;
+
+function money(usd){ return usd == null ? "—" : ("$" + usd.toFixed(2)); }
+
+function renderDomains(results){
+  const list = document.getElementById("domainList");
+  list.innerHTML = "";
+  results.forEach(function(r){
+    const li = document.createElement("li");
+    li.className = "dopt" + (r.available ? "" : " unavail");
+    const overLimit = r.available && r.price != null && r.price > 150;
+    li.innerHTML = '<span class="name">' + r.domain + '</span>' +
+      (r.available
+        ? ('<span class="price' + (overLimit ? ' review' : '') + '">' + (overLimit ? t("js.review","needs review") : money(r.price)) + '</span>')
+        : '<span class="badge">' + t("js.taken","taken") + '</span>');
+    if (r.available) {
+      li.addEventListener("click", function(){
+        document.querySelectorAll(".dopt").forEach(function(el){ el.classList.remove("picked"); });
+        li.classList.add("picked");
+        selectedDomain = { domain: r.domain, price: r.price };
+        updatePayState();
+      });
+    }
+    list.appendChild(li);
+  });
+}
+
+async function searchDomains(){
+  const q = document.getElementById("domainQuery").value.trim();
+  const list = document.getElementById("domainList");
+  list.innerHTML = '<li class="muted" style="padding:6px 0">' + t("js.searching","Searching…") + '</li>';
+  try {
+    const body = q ? { business, query: q } : { business };
+    const r = await fetch(DOMAIN_SEARCH_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const j = await r.json();
+    if (!r.ok || !j.ok) throw new Error(j.error || "search failed");
+    renderDomains(j.results);
+  } catch (e) {
+    list.innerHTML = '<li class="muted" style="padding:6px 0">' + t("js.searcherr","Could not search domains right now. Try again in a moment.") + '</li>';
+  }
+}
+
+function updatePayState(){
+  const btn = document.getElementById("payBtn");
+  const hint = document.getElementById("payHint");
+  if (!btn || !hint) return;
+  if (selectedDomain && selectedPlan) {
+    btn.disabled = false;
+    const planName = selectedPlan[0].toUpperCase() + selectedPlan.slice(1);
+    const template = t("hint.selected", "{domain} · {plan} plan");
+    hint.textContent = template.replace("{domain}", selectedDomain.domain).replace("{plan}", planName);
+  } else {
+    btn.disabled = true;
+    hint.textContent = t("hint.default", "Pick a domain and a plan to continue.");
+  }
+}
+
+document.querySelectorAll(".plan").forEach(function(el){
+  el.addEventListener("click", function(){
+    document.querySelectorAll(".plan").forEach(function(p){ p.classList.remove("picked"); });
+    el.classList.add("picked");
+    selectedPlan = el.dataset.plan;
+    updatePayState();
+  });
+});
+
+document.getElementById("searchBtn").addEventListener("click", searchDomains);
+document.getElementById("domainQuery").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); searchDomains(); } });
+
+document.getElementById("payBtn").addEventListener("click", async function(){
+  const btn = this;
+  const msgEl = document.getElementById("formMsg");
+  msgEl.innerHTML = "";
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> ' + t("js.redirecting","Redirecting to payment…");
+  try {
+    const r = await fetch(CHECKOUT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lead_id: leadId, domain: selectedDomain.domain, domain_price_usd: selectedDomain.price, plan: selectedPlan }),
+    });
+    const j = await r.json();
+    if (r.status === 409 && j.error === "domain_requires_review") {
+      msgEl.innerHTML = '<div class="msg err">' + (j.message || t("js.reviewmsg","This domain needs a quick manual review before we can buy it.")) + t("js.reviewmsg2", " Write to us at info@kwipps.com and we'll sort it out.") + '</div>';
+      btn.disabled = false; btn.textContent = t("btn.pay","Continue to payment →");
+      return;
+    }
+    if (!r.ok || !j.ok) throw new Error(j.error || "checkout failed");
+    window.location.href = j.url;
+  } catch (e) {
+    msgEl.innerHTML = '<div class="msg err">' + t("js.checkouterr","Something went wrong starting checkout. Please try again, or email info@kwipps.com.") + '</div>';
+    btn.disabled = false; btn.textContent = t("btn.pay","Continue to payment →");
+  }
+});
+
+if (!leadId) {
+  document.getElementById("noLead").hidden = false;
+} else {
+  document.getElementById("app").hidden = false;
+  document.getElementById("bizName").textContent = business || t("js.yourbusiness","your business");
+  document.getElementById("domainQuery").value = business;
+  searchDomains();
+}
+</script>
+</body>
+</html>
