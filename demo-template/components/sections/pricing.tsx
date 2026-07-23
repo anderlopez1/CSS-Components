@@ -22,9 +22,9 @@ export function Pricing({ section }: { section: PricingSection }) {
                     >
                         <div className="flex items-center justify-between gap-2">
                             <h3 className="text-lg font-semibold text-primary">{tier.name}</h3>
-                            {tier.highlighted && (
+                            {tier.highlighted && tier.badge && (
                                 <Badge color="brand" type="pill-color" size="md">
-                                    Beliebt
+                                    {tier.badge}
                                 </Badge>
                             )}
                         </div>
