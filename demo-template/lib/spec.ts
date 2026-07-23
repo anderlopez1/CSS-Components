@@ -196,6 +196,13 @@ export interface SiteSpec {
          * strong fit for premium/evening businesses (barbers, bars, tattoo,
          * upscale restaurants). Defaults to "light". */
         theme?: "light" | "dark";
+        /** Design register (from the Stitch benchmark). "editorial" swaps
+         * headings to a serif display face and signals a restrained, cinematic,
+         * "quiet luxury" treatment — for fine dining, hotels, spas, galleries,
+         * design studios, and premium professional services (law, advisory).
+         * "approachable" (default) keeps the bright, sans-serif look for casual
+         * / value / everyday local businesses. */
+        register?: "approachable" | "editorial";
         /** Optional exact-hex overrides for individual stops, e.g. {"600": "#0f766e"} */
         custom?: Record<string, string>;
     };

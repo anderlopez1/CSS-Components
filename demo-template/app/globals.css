@@ -10,6 +10,32 @@ html {
     scroll-behavior: smooth;
 }
 
+/* EDITORIAL REGISTER (brand.register === "editorial", set on <html>).
+   The single biggest quality lever from the Google Stitch benchmark: premium /
+   experiential businesses read as "designed" when headings are a serif display
+   face, the palette stays restrained, and sections breathe. Approachable sites
+   never get this class and stay fully sans-serif. */
+.editorial h1,
+.editorial h2,
+.editorial h3,
+.editorial .font-display {
+    font-family: var(--font-display), Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+/* Uppercase micro-label / two-digit index eyebrow — the recurring editorial
+   "tell". Sections opt in by rendering <p class="eyebrow"> or a .section-index. */
+.editorial .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+.editorial .section-index {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+}
+
 /* Photo slots: enforced aspect ratios so agent-chosen photos can never break
    the layout, whatever their native dimensions. */
 .ph-hero {

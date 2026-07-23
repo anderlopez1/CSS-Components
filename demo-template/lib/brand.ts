@@ -19,6 +19,14 @@ const PALETTES: Record<string, Scale> = {
     red:     { "50": "#fef2f2", "100": "#fee2e2", "200": "#fecaca", "300": "#fca5a5", "400": "#f87171", "500": "#ef4444", "600": "#dc2626", "700": "#b91c1c", "800": "#991b1b", "900": "#7f1d1d", "950": "#450a0a" },
     orange:  { "50": "#fff7ed", "100": "#ffedd5", "200": "#fed7aa", "300": "#fdba74", "400": "#fb923c", "500": "#f97316", "600": "#ea580c", "700": "#c2410c", "800": "#9a3412", "900": "#7c2d12", "950": "#431407" },
     amber:   { "50": "#fffbeb", "100": "#fef3c7", "200": "#fde68a", "300": "#fcd34d", "400": "#fbbf24", "500": "#f59e0b", "600": "#d97706", "700": "#b45309", "800": "#92400e", "900": "#78350f", "950": "#451a03" },
+    // Warm terracotta/peach — the editorial-DARK accent from the Stitch benchmark
+    // (restaurants, bars, hotels on a warm charcoal ground).
+    clay:    { "50": "#fdf3ee", "100": "#fbe3d6", "200": "#f6c3a8", "300": "#f0a179", "400": "#ea8455", "500": "#e06a3a", "600": "#c9542a", "700": "#a64222", "800": "#833623", "900": "#6b2f21", "950": "#3a160f" },
+    // Near-monochrome NEUTRALS for editorial-LIGHT "quiet luxury" (studios,
+    // galleries, law/advisory, jewellers) — the accent barely registers as a
+    // hue, so the serif type + whitespace carry the page.
+    stone:   { "50": "#fafaf9", "100": "#f5f5f4", "200": "#e7e5e4", "300": "#d6d3d1", "400": "#a8a29e", "500": "#78716c", "600": "#57534e", "700": "#44403c", "800": "#292524", "900": "#1c1917", "950": "#0c0a09" },
+    slate:   { "50": "#f8fafc", "100": "#f1f5f9", "200": "#e2e8f0", "300": "#cbd5e1", "400": "#94a3b8", "500": "#64748b", "600": "#475569", "700": "#334155", "800": "#1e293b", "900": "#0f172a", "950": "#020617" },
 };
 
 /** Palette names the agent may use, for embedding in the generation prompt. */
