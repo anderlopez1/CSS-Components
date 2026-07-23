@@ -1,6 +1,7 @@
 import { Badge, Button } from "untitledui-components";
 import { Photo } from "@/components/photo";
 import type { HeroSection } from "@/lib/spec";
+import { accentize, Eyebrow } from "@/components/typo";
 
 export function Hero({ section }: { section: HeroSection }) {
     if (section.variant === "image-bg") {
@@ -21,13 +22,17 @@ export function Hero({ section }: { section: HeroSection }) {
                     aria-hidden="true"
                 />
                 <div className="relative z-10 mx-auto flex min-h-[75vh] max-w-7xl flex-col justify-end px-4 pt-32 pb-16 sm:px-6 sm:pb-24 lg:px-8">
-                    {section.badge && (
-                        <span className="inline-flex w-fit items-center rounded-full bg-white/15 px-3.5 py-1 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur">
-                            {section.badge}
-                        </span>
+                    {section.eyebrow ? (
+                        <p className="text-xs font-semibold tracking-[0.2em] text-white/80 uppercase">{section.eyebrow}</p>
+                    ) : (
+                        section.badge && (
+                            <span className="inline-flex w-fit items-center rounded-full bg-white/15 px-3.5 py-1 text-sm font-medium text-white ring-1 ring-white/30 backdrop-blur">
+                                {section.badge}
+                            </span>
+                        )
                     )}
                     <h1 className="mt-5 max-w-3xl text-display-md font-semibold tracking-tight text-white sm:text-display-lg">
-                        {section.headline}
+                        {accentize(section.headline)}
                     </h1>
                     <p className="mt-6 max-w-2xl text-lg text-pretty text-white/85 sm:text-xl">{section.sub}</p>
                     <div className="mt-10 flex flex-wrap gap-4">
@@ -49,12 +54,18 @@ export function Hero({ section }: { section: HeroSection }) {
         return (
             <section className="bg-primary">
                 <div className="mx-auto max-w-3xl px-4 pt-16 pb-10 text-center sm:px-6 sm:pt-24 lg:px-8">
-                    {section.badge && (
-                        <Badge color="brand" type="pill-color" size="lg">
-                            {section.badge}
-                        </Badge>
+                    {section.eyebrow ? (
+                        <Eyebrow>{section.eyebrow}</Eyebrow>
+                    ) : (
+                        section.badge && (
+                            <Badge color="brand" type="pill-color" size="lg">
+                                {section.badge}
+                            </Badge>
+                        )
                     )}
-                    <h1 className="mt-5 text-display-md font-semibold tracking-tight text-primary sm:text-display-lg">{section.headline}</h1>
+                    <h1 className="mt-5 text-display-md font-semibold tracking-tight text-primary sm:text-display-lg">
+                        {accentize(section.headline)}
+                    </h1>
                     <p className="mx-auto mt-6 max-w-2xl text-lg text-pretty text-tertiary sm:text-xl">{section.sub}</p>
                     <div className="mt-10 flex flex-wrap justify-center gap-4">
                         <Button href={section.primaryCta.href} size="xl">
@@ -79,12 +90,18 @@ export function Hero({ section }: { section: HeroSection }) {
         <section className="bg-primary">
             <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-2 lg:px-8">
                 <div>
-                    {section.badge && (
-                        <Badge color="brand" type="pill-color" size="lg">
-                            {section.badge}
-                        </Badge>
+                    {section.eyebrow ? (
+                        <Eyebrow>{section.eyebrow}</Eyebrow>
+                    ) : (
+                        section.badge && (
+                            <Badge color="brand" type="pill-color" size="lg">
+                                {section.badge}
+                            </Badge>
+                        )
                     )}
-                    <h1 className="mt-5 text-display-md font-semibold tracking-tight text-primary sm:text-display-lg">{section.headline}</h1>
+                    <h1 className="mt-5 text-display-md font-semibold tracking-tight text-primary sm:text-display-lg">
+                        {accentize(section.headline)}
+                    </h1>
                     <p className="mt-6 max-w-prose text-lg text-pretty text-tertiary sm:text-xl">{section.sub}</p>
                     <div className="mt-10 flex flex-wrap gap-4">
                         <Button href={section.primaryCta.href} size="xl">

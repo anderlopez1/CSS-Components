@@ -12,6 +12,28 @@ function initials(name: string): string {
 }
 
 export function Testimonials({ section }: { section: TestimonialsSection }) {
+    if (section.variant === "pull-quote") {
+        // One large italic serif quote — the quietest, most editorial review
+        // treatment. Hairline rules above and below; no cards, no avatars.
+        const t = section.items[0];
+        if (!t) return null;
+        return (
+            <section id={section.id ?? "reviews"} className={section.tone ? toneClass(section.tone) : ""}>
+                <div className="mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
+                    <span aria-hidden="true" className="mx-auto block h-px w-16 bg-brand-solid" />
+                    <blockquote className="mt-10 font-display text-2xl leading-snug text-pretty text-primary italic sm:text-3xl md:text-4xl">
+                        “{t.quote}”
+                    </blockquote>
+                    <p className="mt-8 text-xs font-semibold tracking-[0.2em] text-brand-secondary uppercase">
+                        {t.name}
+                        {t.role ? ` · ${t.role}` : ""}
+                    </p>
+                    <span aria-hidden="true" className="mx-auto mt-10 block h-px w-16 bg-brand-solid" />
+                </div>
+            </section>
+        );
+    }
+
     if (section.variant === "single-dark") {
         const t = section.items[0];
         if (!t) return null;

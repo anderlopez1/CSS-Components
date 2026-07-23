@@ -8,6 +8,7 @@ import { Footer } from "@/components/sections/footer";
 import { Gallery } from "@/components/sections/gallery";
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
+import { Menu } from "@/components/sections/menu";
 import { Pricing } from "@/components/sections/pricing";
 import { Stats } from "@/components/sections/stats";
 import { Testimonials } from "@/components/sections/testimonials";
@@ -28,6 +29,8 @@ export function SectionRenderer({ section, agencyCredit }: { section: Section; a
             return <Gallery section={section} />;
         case "testimonials":
             return <Testimonials section={section} />;
+        case "menu":
+            return <Menu section={section} />;
         case "pricing":
             return <Pricing section={section} />;
         case "faq":
