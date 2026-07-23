@@ -46,6 +46,12 @@ export interface HeroSection {
     variant: "image-bg" | "split-photo" | "centered";
     /** Small pill above the headline, e.g. "Seit 1998 in Zürich" */
     badge?: string;
+    /** Uppercase micro-label above the headline (editorial "tell"), e.g.
+     * "EST. 1998 · ZÜRICH". Rendered small and letter-spaced. Prefer this over
+     * `badge` on editorial sites. */
+    eyebrow?: string;
+    /** Headline. Wrap a word/phrase in *asterisks* to render it as an italic
+     * display accent, e.g. "The art of *slow* coffee". */
     headline: string;
     sub: string;
     primaryCta: Cta;
@@ -79,7 +85,12 @@ export interface StatsSection {
 export interface GallerySection {
     type: "gallery";
     tone?: SectionTone;
+    /** Uppercase micro-label above the headline. */
+    eyebrow?: string;
     headline: string;
+    /** grid (default): even 3-across. collage: an editorial off-grid mosaic
+     * with mixed sizes — more characterful, best for 5 photos. */
+    variant?: "grid" | "collage";
     photos: Photo[];
 }
 
@@ -95,10 +106,44 @@ export interface TestimonialItem {
 export interface TestimonialsSection {
     type: "testimonials";
     tone?: SectionTone;
-    variant: "single-dark" | "grid";
+    /** single-dark: one quote on a brand band. grid: cards. pull-quote: one
+     * large italic serif quote, centered on the page surface with hairline
+     * rules — the most editorial treatment. */
+    variant: "single-dark" | "grid" | "pull-quote";
     id?: string;
+    eyebrow?: string;
     headline?: string;
     items: TestimonialItem[];
+}
+
+// A typographic menu / price list — the highest-value section for food & drink
+// (and treatment lists for salons, spas, clinics). Rendered as two columns of
+// grouped items with dotted price leaders; far stronger than an improvised
+// custom section.
+export interface MenuItem {
+    name: string;
+    /** Price with its currency symbol, e.g. "4,50 €" / "CHF 18". Optional (some
+     * lists are prix-fixe or descriptive). */
+    price?: string;
+    /** One short line under the name. */
+    desc?: string;
+}
+
+export interface MenuGroup {
+    /** Group heading, e.g. "Vermuts", "Para picar", "Behandlungen". */
+    title: string;
+    items: MenuItem[];
+}
+
+export interface MenuSection {
+    type: "menu";
+    tone?: SectionTone;
+    id?: string;
+    eyebrow?: string;
+    headline?: string;
+    groups: MenuGroup[];
+    /** Optional footnote, e.g. "Prices include VAT". */
+    note?: string;
 }
 
 export interface PricingTier {
@@ -171,6 +216,7 @@ export type Section =
     | StatsSection
     | GallerySection
     | TestimonialsSection
+    | MenuSection
     | PricingSection
     | FaqSection
     | CtaSection
@@ -205,6 +251,12 @@ export interface SiteSpec {
         register?: "approachable" | "editorial";
         /** Optional exact-hex overrides for individual stops, e.g. {"600": "#0f766e"} */
         custom?: Record<string, string>;
+        /** Optional display-face selection (editorial sites). `display` is one
+         * of the serif faces in lib/fonts.ts — e.g. "Bodoni Moda",
+         * "Libre Caslon Text", "Playfair Display" (default). Lets each design
+         * direction carry its own headline type instead of one house serif.
+         * `body` is reserved for a future body-face override. */
+        fonts?: { display?: string; body?: string };
     };
     /** Footer credit, e.g. "Demo-Konzept erstellt von Kwipps" */
     agencyCredit: string;
