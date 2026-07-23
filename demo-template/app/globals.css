@@ -36,6 +36,19 @@ html {
     letter-spacing: 0.1em;
 }
 
+/* PRODUCT REGISTER (brand.register === "product", set on <html>).
+   The modern-SaaS look: a large geometric-sans display (Space Grotesk / Sora,
+   bound to --font-display), tight tracking, near-monochrome. Headings use the
+   grotesk; the page stays sans throughout (no serif). */
+.product h1,
+.product h2,
+.product h3,
+.product .font-display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
 /* Photo slots: enforced aspect ratios so agent-chosen photos can never break
    the layout, whatever their native dimensions. */
 .ph-hero {

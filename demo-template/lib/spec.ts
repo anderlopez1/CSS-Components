@@ -146,6 +146,54 @@ export interface MenuSection {
     note?: string;
 }
 
+// ---- SaaS / "product" register sections --------------------------------
+
+/** A row of partner/customer names as a "trusted by" strip (rendered as
+ * refined monochrome wordmarks, since real logos aren't available). */
+export interface TrustStripSection {
+    type: "trust-strip";
+    /** e.g. "TRUSTED BY INDUSTRY LEADERS" */
+    eyebrow?: string;
+    /** 4–6 company names. */
+    logos: string[];
+}
+
+/** Product showcase: a UI/product screenshot beside copy + optional bullets.
+ * The workhorse "here's what the product looks like" section. */
+export interface ShowcaseSection {
+    type: "showcase";
+    tone?: SectionTone;
+    id?: string;
+    eyebrow?: string;
+    headline: string;
+    body?: string;
+    /** Short capability bullets. */
+    bullets?: string[];
+    /** Product screenshot; use a "app dashboard ui" / "analytics screen" query. */
+    photo: Photo;
+    /** Which side the image sits on. Default "right". */
+    imageSide?: "left" | "right";
+    cta?: Cta;
+}
+
+/** Developer / code section: a syntax-agnostic code sample on a dark card with
+ * copy + capability tags. Signals "built for developers". */
+export interface CodeSection {
+    type: "code";
+    tone?: SectionTone;
+    id?: string;
+    eyebrow?: string;
+    headline: string;
+    body?: string;
+    /** Language label, e.g. "python", "bash", "ts". */
+    lang?: string;
+    /** The code sample (verbatim, with newlines). */
+    code: string;
+    /** Capability chips, e.g. ["Low latency", "REST & WebSocket", "SDKs"]. */
+    tags?: string[];
+    cta?: Cta;
+}
+
 export interface PricingTier {
     name: string;
     price: string;
@@ -153,6 +201,9 @@ export interface PricingTier {
     description?: string;
     features: string[];
     highlighted?: boolean;
+    /** Optional badge on the highlighted tier, in the PAGE language, e.g.
+     * "Most popular" / "Más popular" / "Le plus choisi". Omit for no badge. */
+    badge?: string;
     cta: Cta;
 }
 
@@ -217,6 +268,9 @@ export type Section =
     | GallerySection
     | TestimonialsSection
     | MenuSection
+    | TrustStripSection
+    | ShowcaseSection
+    | CodeSection
     | PricingSection
     | FaqSection
     | CtaSection
@@ -247,8 +301,11 @@ export interface SiteSpec {
          * "quiet luxury" treatment — for fine dining, hotels, spas, galleries,
          * design studios, and premium professional services (law, advisory).
          * "approachable" (default) keeps the bright, sans-serif look for casual
-         * / value / everyday local businesses. */
-        register?: "approachable" | "editorial";
+         * / value / everyday local businesses. "product" is the modern-SaaS
+         * register: a large geometric-sans display, near-monochrome ground,
+         * product-visual heroes, trust strips and feature grids — for software /
+         * SaaS / startup marketing sites. */
+        register?: "approachable" | "editorial" | "product";
         /** Optional exact-hex overrides for individual stops, e.g. {"600": "#0f766e"} */
         custom?: Record<string, string>;
         /** Optional display-face selection (editorial sites). `display` is one

@@ -9,6 +9,9 @@ import { Gallery } from "@/components/sections/gallery";
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
 import { Menu } from "@/components/sections/menu";
+import { TrustStrip } from "@/components/sections/trust-strip";
+import { Showcase } from "@/components/sections/showcase";
+import { Code } from "@/components/sections/code";
 import { Pricing } from "@/components/sections/pricing";
 import { Stats } from "@/components/sections/stats";
 import { Testimonials } from "@/components/sections/testimonials";
@@ -31,6 +34,12 @@ export function SectionRenderer({ section, agencyCredit }: { section: Section; a
             return <Testimonials section={section} />;
         case "menu":
             return <Menu section={section} />;
+        case "trust-strip":
+            return <TrustStrip section={section} />;
+        case "showcase":
+            return <Showcase section={section} />;
+        case "code":
+            return <Code section={section} />;
         case "pricing":
             return <Pricing section={section} />;
         case "faq":
