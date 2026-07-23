@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 import { Palette, Zap, MarkerPin01, Calendar, Mail01, Tool01, CheckCircle } from "@untitledui/icons";
 import { I18nProvider, useI18n, LANGS, LANG_LABEL, type Lang } from "@/lib/i18n";
 import { IMG, INTAKE_URL } from "@/lib/images";
@@ -165,36 +165,97 @@ function How() {
     );
 }
 
-/* -------------------------------------------------------------------- work */
+/* --------------------------------------------------------------- showcase
+   "A site for every kind of business" — an auto-advancing slideshow that
+   crossfades through business types. Pauses on hover; respects reduced-motion. */
 
-function Work() {
+function Showcase() {
     const { t } = useI18n();
+    const slides = IMG.showcase;
+    const [active, setActive] = useState(0);
+    const [paused, setPaused] = useState(false);
+    const reduced = useRef(false);
+
+    useEffect(() => {
+        reduced.current =
+            typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }, []);
+
+    useEffect(() => {
+        if (paused || reduced.current) return;
+        const id = setInterval(() => setActive((i) => (i + 1) % slides.length), 3800);
+        return () => clearInterval(id);
+    }, [paused, slides.length]);
+
+    const go = (dir: number) => setActive((i) => (i + dir + slides.length) % slides.length);
+    const num = (n: number) => String(n).padStart(2, "0");
+
     return (
-        <section className="bg-[var(--paper)]">
+        <section className="border-t border-[var(--line)] bg-[var(--paper)]">
             <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
                 <div className="max-w-2xl">
-                    <Eyebrow>{t("work.eyebrow")}</Eyebrow>
-                    <h2 className="mt-5 text-[clamp(1.9rem,3.5vw,2.9rem)] leading-tight text-[var(--ink)]">{t("work.h2")}</h2>
-                    <p className="mt-4 text-lg text-[var(--ink-soft)]">{t("work.p")}</p>
+                    <Eyebrow>{t("biz.eyebrow")}</Eyebrow>
+                    <h2 className="mt-5 text-[clamp(1.9rem,3.5vw,2.9rem)] leading-tight text-[var(--ink)]">{t("biz.h2")}</h2>
+                    <p className="mt-4 text-lg text-[var(--ink-soft)]">{t("biz.sub")}</p>
                 </div>
-                <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
-                    {IMG.work.map((w, i) => (
-                        <figure
-                            key={w.key}
-                            className={`group relative overflow-hidden rounded-sm ring-1 ring-[var(--line-strong)] ${
-                                i === 0 ? "row-span-2 aspect-[3/4] lg:aspect-auto" : "aspect-4/5"
-                            }`}
-                        >
+
+                <div
+                    className="group relative mt-14 overflow-hidden rounded-sm ring-1 ring-[var(--line-strong)]"
+                    onMouseEnter={() => setPaused(true)}
+                    onMouseLeave={() => setPaused(false)}
+                >
+                    <div className="relative aspect-[16/10] sm:aspect-[16/9]">
+                        {slides.map((s, i) => (
                             <img
-                                src={w.src}
-                                alt={t(w.key)}
-                                className="k-photo transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                                key={s.key}
+                                src={s.src}
+                                alt={t(s.key)}
+                                aria-hidden={i !== active}
+                                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[900ms] ease-in-out ${
+                                    i === active ? "opacity-100" : "opacity-0"
+                                }`}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                            <figcaption className="absolute bottom-0 left-0 p-5 text-sm font-medium tracking-wide text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                {t(w.key)}
-                            </figcaption>
-                        </figure>
+                        ))}
+                        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(20,16,13,0.72)_0%,rgba(20,16,13,0.1)_45%,transparent_70%)]" />
+
+                        {/* caption */}
+                        <div className="absolute bottom-0 left-0 flex items-end gap-4 p-6 sm:p-9">
+                            <span className="font-display text-2xl text-white/60 tabular-nums sm:text-3xl">
+                                {num(active + 1)}<span className="text-white/35">/{num(slides.length)}</span>
+                            </span>
+                            <span className="font-display text-2xl text-white sm:text-4xl">{t(slides[active].key)}</span>
+                        </div>
+
+                        {/* arrows (appear on hover) */}
+                        <button
+                            onClick={() => go(-1)}
+                            aria-label="Previous"
+                            className="absolute top-1/2 left-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-lg text-white opacity-0 backdrop-blur-sm transition hover:bg-black/50 group-hover:opacity-100"
+                        >
+                            ‹
+                        </button>
+                        <button
+                            onClick={() => go(1)}
+                            aria-label="Next"
+                            className="absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-lg text-white opacity-0 backdrop-blur-sm transition hover:bg-black/50 group-hover:opacity-100"
+                        >
+                            ›
+                        </button>
+                    </div>
+                </div>
+
+                {/* dots */}
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+                    {slides.map((s, i) => (
+                        <button
+                            key={s.key}
+                            onClick={() => setActive(i)}
+                            aria-label={t(s.key)}
+                            aria-current={i === active}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                                i === active ? "w-7 bg-[var(--accent)]" : "w-1.5 bg-[var(--line-strong)] hover:bg-[var(--ink-faint)]"
+                            }`}
+                        />
                     ))}
                 </div>
             </div>
@@ -457,7 +518,7 @@ function SiteBody() {
                 <Strip />
                 <Manifesto />
                 <How />
-                <Work />
+                <Showcase />
                 <Features />
                 <Band />
                 <Pricing />
