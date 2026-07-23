@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal notice — Kwipps</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:#FAF9F6;color:#334155;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:56px 24px}
+  a{color:#16324F}
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:16px;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:1.4rem;color:#16324F;letter-spacing:-.03em;display:flex;align-items:center;gap:9px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:#F0A826}
+  .lang{display:flex;gap:2px;background:#eee7db;border-radius:999px;padding:3px}
+  .lang-btn{border:none;background:transparent;font-family:inherit;font-weight:600;font-size:.8rem;color:#64748b;padding:5px 10px;border-radius:999px;cursor:pointer}
+  .lang-btn.active{background:#fff;color:#16324F;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+  h1{color:#16324F;font-size:2rem;margin-bottom:24px;letter-spacing:-.02em}
+  h2{color:#16324F;font-size:1.15rem;margin:28px 0 8px}
+  .back{display:inline-block;margin-top:40px;color:#16324F;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/" class="logo"><span class="dot"></span>Kwipps</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+  <h1 data-i18n="title">Legal notice</h1>
+
+  <h2 data-i18n="resp">Responsible for the content</h2>
+  <p>Kwipps<br>Ander Lopez<br>Rue du village 8<br>1053 Cugy<br><span data-i18n="country">Switzerland</span></p>
+
+  <h2 data-i18n="contact">Contact</h2>
+  <p>Email: <a href="mailto:info@kwipps.com">info@kwipps.com</a></p>
+
+  <h2 data-i18n="disc.h">Disclaimer</h2>
+  <p data-i18n="disc.p">The contents of this website were created with the greatest possible care. However, no guarantee is given for the accuracy, completeness or timeliness of the content. The operators of external linked sites are solely responsible for their content.</p>
+
+  <a href="/" class="back" data-i18n="back">← Back to the home page</a>
+</div>
+<script>
+const I18N = {
+  en:{},
+  de:{title:"Impressum",resp:"Verantwortlich für den Inhalt",country:"Schweiz",contact:"Kontakt",
+    "disc.h":"Haftungsausschluss","disc.p":"Die Inhalte dieser Website wurden mit grösstmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Für Inhalte externer Links sind ausschliesslich deren Betreiber verantwortlich.",
+    back:"← Zurück zur Startseite","doc.title":"Impressum — Kwipps"},
+  fr:{title:"Mentions légales",resp:"Responsable du contenu",country:"Suisse",contact:"Contact",
+    "disc.h":"Clause de non-responsabilité","disc.p":"Les contenus de ce site ont été élaborés avec le plus grand soin. Aucune garantie n'est toutefois donnée quant à l'exactitude, l'exhaustivité et l'actualité des contenus. Les exploitants des sites externes liés sont seuls responsables de leur contenu.",
+    back:"← Retour à l'accueil","doc.title":"Mentions légales — Kwipps"},
+  es:{title:"Aviso legal",resp:"Responsable del contenido",country:"Suiza",contact:"Contacto",
+    "disc.h":"Aviso de responsabilidad","disc.p":"Los contenidos de este sitio web fueron elaborados con el mayor cuidado posible. Sin embargo, no se garantiza la exactitud, integridad ni actualidad de los contenidos. Los operadores de los sitios externos enlazados son los únicos responsables de su contenido.",
+    back:"← Volver al inicio","doc.title":"Aviso legal — Kwipps"}
+};
+const DEFAULT_TITLE = document.title;
+function setLang(l){
+  const d = I18N[l] || {};
+  document.documentElement.lang = l;
+  if (l !== "en") document.querySelectorAll("[data-i18n]").forEach(function(el){
+    const k = el.getAttribute("data-i18n"); if (d[k] != null) el.textContent = d[k];
+  });
+  document.title = (l !== "en" && d["doc.title"]) ? d["doc.title"] : DEFAULT_TITLE;
+  document.querySelectorAll(".lang-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.lang === l); });
+  try { localStorage.setItem("kwipps_lang", l); } catch(e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    const l = b.dataset.lang;
+    if (l === "en" && document.documentElement.lang !== "en") { try{localStorage.setItem("kwipps_lang","en");}catch(e){} location.reload(); return; }
+    setLang(l);
+  });
+});
+(function(){
+  let s=null; try{s=localStorage.getItem("kwipps_lang");}catch(e){}
+  const n=(navigator.language||"en").slice(0,2).toLowerCase();
+  setLang(s || (["de","en","fr","es"].indexOf(n)>=0 ? n : "en"));
+})();
+</script>
+</body>
+</html>

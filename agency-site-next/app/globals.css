@@ -1,0 +1,110 @@
+/* The Untitled UI system (Tailwind v4 + semantic tokens + components) — the
+   same design system the agents use to build client demos. We build the Kwipps
+   site on it too. */
+@import "untitledui-components/styles";
+@source "../node_modules/untitledui-components/dist";
+
+/* ------------------------------------------------------------------ palette
+   Kwipps, editorial register ("quiet luxury"): a warm paper ground, warm
+   near-black ink, a restrained bronze accent (our amber, deepened so it reads
+   editorial rather than playful), and a warm charcoal for dark sections. The
+   serif display type + whitespace carry the page; the accent barely registers. */
+:root {
+    --paper: #f6f3ee;
+    --paper-2: #efeae1;
+    --card: #fffdfa;
+    --ink: #201b16;
+    --ink-soft: #5c5348;
+    --ink-faint: #8a7f70;
+    --line: #e4ddd1;
+    --line-strong: #d5cbba;
+    --accent: #b0611f;
+    --accent-deep: #8f4e18;
+    --accent-bright: #d8940f;
+    --char: #1b1613;
+    --char-2: #262019;
+    --char-line: #3a3129;
+    --char-ink: #efe7db;
+    --char-soft: #b8ac9a;
+}
+
+html { scroll-behavior: smooth; }
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Editorial serif display (Playfair) on all headings + anything opted in with
+   .font-display. This is the single biggest lever of the register. */
+.editorial h1,
+.editorial h2,
+.editorial h3,
+.editorial .font-display {
+    font-family: var(--font-display), Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+}
+
+/* Uppercase micro-label — the recurring editorial "tell". */
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+.section-index {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+}
+
+/* ------------------------------------------------------------------ buttons */
+.k-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    line-height: 1;
+    padding: 0.95rem 1.6rem;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    text-align: center;
+}
+.k-btn:active { transform: translateY(1px); }
+.k-btn-primary { background: var(--accent); color: #fff; }
+.k-btn-primary:hover { background: var(--accent-deep); }
+.k-btn-ink { background: var(--ink); color: var(--paper); }
+.k-btn-ink:hover { background: #000; }
+.k-btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.k-btn-ghost:hover { border-color: var(--ink); }
+.k-btn-ondark { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+.k-btn-ondark:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+.k-btn-lg { padding: 1.1rem 2rem; font-size: 1.05rem; }
+
+/* Understated text link with an animated underline — editorial navigation. */
+.k-link { position: relative; color: var(--ink); font-weight: 500; }
+.k-link::after {
+    content: ""; position: absolute; left: 0; bottom: -3px; height: 1px; width: 100%;
+    background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+}
+.k-link:hover::after { transform: scaleX(1); }
+
+/* Hairline rule used to separate editorial rows. */
+.k-rule { height: 1px; background: var(--line); border: 0; }
+
+/* Photo framing — consistent editorial crops. */
+.k-photo { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-2); }
+
+/* Respect reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}

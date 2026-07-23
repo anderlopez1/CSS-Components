@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — Kwipps</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:#FAF9F6;color:#334155;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:56px 24px}
+  a{color:#16324F}
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:16px;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:1.4rem;color:#16324F;letter-spacing:-.03em;display:flex;align-items:center;gap:9px}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:#F0A826}
+  .lang{display:flex;gap:2px;background:#eee7db;border-radius:999px;padding:3px}
+  .lang-btn{border:none;background:transparent;font-family:inherit;font-weight:600;font-size:.8rem;color:#64748b;padding:5px 10px;border-radius:999px;cursor:pointer}
+  .lang-btn.active{background:#fff;color:#16324F;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+  h1{color:#16324F;font-size:2rem;margin-bottom:24px;letter-spacing:-.02em}
+  h2{color:#16324F;font-size:1.15rem;margin:28px 0 8px}
+  .back{display:inline-block;margin-top:40px;color:#16324F;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/" class="logo"><span class="dot"></span>Kwipps</a>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="de">DE</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+  <h1 data-i18n="title">Privacy policy</h1>
+
+  <p data-i18n="intro">The protection of your personal data is important to us. We process your data in accordance with the Swiss Data Protection Act (DSG) and, where applicable, the EU General Data Protection Regulation (GDPR).</p>
+
+  <h2 data-i18n="resp.h">Controller</h2>
+  <p>Kwipps, Ander Lopez<br>Rue du village 8, 1053 Cugy, <span data-i18n="country">Switzerland</span><br><a href="mailto:info@kwipps.com">info@kwipps.com</a></p>
+
+  <h2 data-i18n="what.h">What data we process</h2>
+  <p data-i18n="what.p">When you send us an enquiry via the contact form or by email, we process the data you provide (name, email address, details of your business, message) in order to answer your enquiry. This data is not passed on to third parties without your consent.</p>
+
+  <h2 data-i18n="purpose.h">Purpose</h2>
+  <p data-i18n="purpose.p">Processing is carried out solely to answer your enquiry and to provide our services.</p>
+
+  <h2 data-i18n="keep.h">Retention</h2>
+  <p data-i18n="keep.p">We keep your data only as long as necessary for the stated purpose or as required by statutory retention periods.</p>
+
+  <h2 data-i18n="rights.h">Your rights</h2>
+  <p data-i18n="rights.p">You have the right to information, correction, deletion and restriction of the processing of your data. To exercise these rights, contact <a href="mailto:info@kwipps.com">info@kwipps.com</a>.</p>
+
+  <a href="/" class="back" data-i18n="back">← Back to the home page</a>
+</div>
+<script>
+const I18N = {
+  en:{},
+  de:{title:"Datenschutzerklärung",
+    intro:"Der Schutz Ihrer persönlichen Daten ist uns wichtig. Wir bearbeiten Ihre Daten im Einklang mit dem Schweizer Datenschutzgesetz (DSG) und, soweit anwendbar, der EU-Datenschutz-Grundverordnung (DSGVO).",
+    "resp.h":"Verantwortliche Stelle",country:"Schweiz",
+    "what.h":"Welche Daten wir bearbeiten","what.p":"Wenn Sie uns über das Kontaktformular oder per E-Mail eine Anfrage senden, bearbeiten wir die von Ihnen angegebenen Daten (Name, E-Mail-Adresse, Angaben zu Ihrem Geschäft, Nachricht), um Ihre Anfrage zu beantworten. Diese Daten werden nicht ohne Ihre Einwilligung an Dritte weitergegeben.",
+    "purpose.h":"Zweck","purpose.p":"Die Bearbeitung erfolgt ausschliesslich zur Beantwortung Ihrer Anfrage und zur Erbringung unserer Dienstleistungen.",
+    "keep.h":"Aufbewahrung","keep.p":"Wir bewahren Ihre Daten nur so lange auf, wie es für den genannten Zweck erforderlich ist oder gesetzliche Aufbewahrungsfristen es verlangen.",
+    "rights.h":"Ihre Rechte","rights.p":"Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Bearbeitung Ihrer Daten. Wenden Sie sich dafür an <a href=\"mailto:info@kwipps.com\">info@kwipps.com</a>.",
+    back:"← Zurück zur Startseite","doc.title":"Datenschutz — Kwipps"},
+  fr:{title:"Politique de confidentialité",
+    intro:"La protection de vos données personnelles nous tient à cœur. Nous traitons vos données conformément à la loi suisse sur la protection des données (LPD) et, le cas échéant, au règlement général de l'UE sur la protection des données (RGPD).",
+    "resp.h":"Responsable du traitement",country:"Suisse",
+    "what.h":"Quelles données nous traitons","what.p":"Lorsque vous nous envoyez une demande via le formulaire de contact ou par e-mail, nous traitons les données que vous fournissez (nom, adresse e-mail, informations sur votre commerce, message) afin de répondre à votre demande. Ces données ne sont pas transmises à des tiers sans votre consentement.",
+    "purpose.h":"Finalité","purpose.p":"Le traitement est effectué uniquement pour répondre à votre demande et fournir nos services.",
+    "keep.h":"Conservation","keep.p":"Nous conservons vos données uniquement le temps nécessaire à la finalité indiquée ou selon les durées légales de conservation.",
+    "rights.h":"Vos droits","rights.p":"Vous avez le droit d'accès, de rectification, d'effacement et de limitation du traitement de vos données. Pour les exercer, écrivez à <a href=\"mailto:info@kwipps.com\">info@kwipps.com</a>.",
+    back:"← Retour à l'accueil","doc.title":"Confidentialité — Kwipps"},
+  es:{title:"Política de privacidad",
+    intro:"La protección de sus datos personales es importante para nosotros. Tratamos sus datos conforme a la ley suiza de protección de datos (LPD) y, en su caso, al Reglamento General de Protección de Datos de la UE (RGPD).",
+    "resp.h":"Responsable del tratamiento",country:"Suiza",
+    "what.h":"Qué datos tratamos","what.p":"Cuando nos envía una consulta a través del formulario de contacto o por correo electrónico, tratamos los datos que nos proporciona (nombre, correo electrónico, datos de su negocio, mensaje) con el fin de responder a su consulta. Estos datos no se transmiten a terceros sin su consentimiento.",
+    "purpose.h":"Finalidad","purpose.p":"El tratamiento se realiza únicamente para responder a su consulta y prestar nuestros servicios.",
+    "keep.h":"Conservación","keep.p":"Conservamos sus datos solo durante el tiempo necesario para la finalidad indicada o según los plazos legales de conservación.",
+    "rights.h":"Sus derechos","rights.p":"Tiene derecho de acceso, rectificación, supresión y limitación del tratamiento de sus datos. Para ejercerlos, escriba a <a href=\"mailto:info@kwipps.com\">info@kwipps.com</a>.",
+    back:"← Volver al inicio","doc.title":"Privacidad — Kwipps"}
+};
+const DEFAULT_TITLE = document.title;
+function setLang(l){
+  const d = I18N[l] || {};
+  document.documentElement.lang = l;
+  if (l !== "en") document.querySelectorAll("[data-i18n]").forEach(function(el){
+    const k = el.getAttribute("data-i18n"); if (d[k] != null) el.innerHTML = d[k];
+  });
+  document.title = (l !== "en" && d["doc.title"]) ? d["doc.title"] : DEFAULT_TITLE;
+  document.querySelectorAll(".lang-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.lang === l); });
+  try { localStorage.setItem("kwipps_lang", l); } catch(e) {}
+}
+document.querySelectorAll(".lang-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    const l = b.dataset.lang;
+    if (l === "en" && document.documentElement.lang !== "en") { try{localStorage.setItem("kwipps_lang","en");}catch(e){} location.reload(); return; }
+    setLang(l);
+  });
+});
+(function(){
+  let s=null; try{s=localStorage.getItem("kwipps_lang");}catch(e){}
+  const n=(navigator.language||"en").slice(0,2).toLowerCase();
+  setLang(s || (["de","en","fr","es"].indexOf(n)>=0 ? n : "en"));
+})();
+</script>
+</body>
+</html>
